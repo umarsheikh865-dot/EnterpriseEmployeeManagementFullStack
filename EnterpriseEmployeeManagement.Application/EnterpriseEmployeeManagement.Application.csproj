@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Behaviours\" />
+    <Folder Include="Features\Authentication\Login\" />
+    <Folder Include="Features\Authentication\Register\" />
+    <Folder Include="Mapping\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Services\" />
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="MediatR.Contracts.CQRS" Version="1.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EnterpriseEmployeeManagement.Domain\EnterpriseEmployeeManagement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
