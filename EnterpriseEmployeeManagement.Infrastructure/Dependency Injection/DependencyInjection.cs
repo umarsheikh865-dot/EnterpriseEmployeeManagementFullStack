@@ -2,6 +2,7 @@
 using EnterpriseEmployeeManagement.Application.Interfaces;
 using EnterpriseEmployeeManagement.Application.Interfaces.Repositories;
 using EnterpriseEmployeeManagement.Application.Interfaces.Services;
+
 using EnterpriseEmployeeManagement.Infrastructure.Persistence;
 using EnterpriseEmployeeManagement.Infrastructure.Repositories;
 using EnterpriseEmployeeManagement.Infrastructure.Services;
@@ -29,6 +30,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                         "DefaultConnection"));
             });
 
+
             // ============================================
             // GENERIC REPOSITORY
             // ============================================
@@ -36,6 +38,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             services.AddScoped(
                 typeof(IGenericRepository<>),
                 typeof(GenericRepository<>));
+
 
             // ============================================
             // EMPLOYEE REPOSITORY
@@ -45,6 +48,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 IEmployeeRepository,
                 EmployeeRepository>();
 
+
             // ============================================
             // UNIT OF WORK
             // ============================================
@@ -53,12 +57,14 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 IUnitOfWork,
                 UnitOfWork>();
 
+
             // ============================================
             // JWT SETTINGS
             // ============================================
 
             services.Configure<JwtSettings>(
-                configuration.GetSection("Jwt"));
+                configuration.GetSection("JwtSettings"));
+
 
             // ============================================
             // PASSWORD SERVICE
@@ -68,6 +74,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 IPasswordService,
                 PasswordService>();
 
+
             // ============================================
             // JWT SERVICE
             // ============================================
@@ -75,6 +82,10 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             services.AddScoped<
                 IJwtService,
                 JwtService>();
+
+            services.AddScoped<
+    IAuthenticationService,
+    AuthenticationService>();
 
             // ============================================
             // AUTHENTICATION SERVICE
@@ -84,6 +95,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 IAuthenticationService,
                 AuthenticationService>();
 
+
             // ============================================
             // EMPLOYEE SERVICE
             // ============================================
@@ -91,6 +103,26 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             services.AddScoped<
                 IEmployeeService,
                 EmployeeService>();
+
+
+            // ============================================
+            // KEYED EMPLOYEE NOTIFICATION SERVICES
+            // ============================================
+
+            services.AddKeyedScoped<
+                IEmployeeNotificationService,
+                EmailNotificationService>("email");
+
+            services.AddKeyedScoped<
+                IEmployeeNotificationService,
+                SmsNotificationService>("sms");
+
+
+
+
+            // ============================================
+            // RETURN SERVICES
+            // ============================================
 
             return services;
         }

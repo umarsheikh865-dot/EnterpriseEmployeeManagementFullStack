@@ -1,5 +1,7 @@
-﻿using EnterpriseEmployeeManagement.Application.DTOs.Employees;
+﻿using EnterpriseEmployeeManagement.Application.DTOs;
+using EnterpriseEmployeeManagement.Application.DTOs.Employees;
 using EnterpriseEmployeeManagement.Application.Interfaces;
+using EnterpriseEmployeeManagement.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,101 +19,80 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
             _employeeService = employeeService;
         }
 
+        // GET: api/Employee
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<EmployeeResponseDto>>> GetAll()
         {
             var employees = await _employeeService.GetAllAsync();
 
             return Ok(employees);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        // GET: api/Employee/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<EmployeeResponseDto>> GetById(int id)
         {
             var employee = await _employeeService.GetByIdAsync(id);
 
             if (employee == null)
-                return NotFound(new
-                {
-                    message = "Employee not found."
-                });
+            {
+                return NotFound();
+            }
 
             return Ok(employee);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create(
-            CreateEmployeeDto dto)
+        // GET: api/Employee/paged
+        [HttpGet("paged")]
+        public async Task<ActionResult<PagedEmployeeResponseDto>> GetPaged(
+            [FromQuery] EmployeeQueryDto query)
         {
-            try
-            {
-                var employee =
-                    await _employeeService.CreateAsync(dto);
+            var result = await _employeeService.GetPagedAsync(query);
 
-                return CreatedAtAction(
-                    nameof(GetById),
-                    new { id = employee.Id },
-                    employee);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new
-                {
-                    message = ex.Message
-                });
-            }
+            return Ok(result);
         }
 
-        [HttpPut("{id:int}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update(
+        // POST: api/Employee
+        [HttpPost]
+        public async Task<ActionResult<EmployeeResponseDto>> Create(
+            CreateEmployeeDto dto)
+        {
+            var employee = await _employeeService.CreateAsync(dto);
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = employee.Id },
+                employee);
+        }
+
+        // PUT: api/Employee/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<EmployeeResponseDto>> Update(
             int id,
             UpdateEmployeeDto dto)
         {
-            try
-            {
-                var updated =
-                    await _employeeService.UpdateAsync(id, dto);
+            var employee = await _employeeService.UpdateAsync(id, dto);
 
-                if (updated == null)
-                    return NotFound(new
-                    {
-                        message = "Employee not found."
-                    });
-
-                return Ok(new
-                {
-                    message = "Employee updated successfully.",
-                    data = updated
-                });
-            }
-            catch (InvalidOperationException ex)
+            if (employee == null)
             {
-                return BadRequest(new
-                {
-                    message = ex.Message
-                });
+                return NotFound();
             }
+
+            return Ok(employee);
         }
 
-        [HttpDelete("{id:int}")]
-        [Authorize(Roles = "Admin")]
+        // DELETE: api/Employee/5
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deleted =
-                await _employeeService.DeleteAsync(id);
+            var deleted = await _employeeService.DeleteAsync(id);
 
             if (!deleted)
-                return NotFound(new
-                {
-                    message = "Employee not found."
-                });
-
-            return Ok(new
             {
-                message = "Employee deleted successfully."
-            });
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

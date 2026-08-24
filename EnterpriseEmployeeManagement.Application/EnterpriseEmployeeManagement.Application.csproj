@@ -12,9 +12,7 @@
     <Folder Include="Features\Authentication\Register\" />
     <Folder Include="Mapping\" />
     <Folder Include="Contracts\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="Services\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>

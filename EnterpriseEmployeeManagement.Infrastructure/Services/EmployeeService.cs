@@ -1,4 +1,5 @@
-﻿using EnterpriseEmployeeManagement.Application.DTOs.Employees;
+﻿using EnterpriseEmployeeManagement.Application.DTOs;
+using EnterpriseEmployeeManagement.Application.DTOs.Employees;
 using EnterpriseEmployeeManagement.Application.Interfaces;
 using EnterpriseEmployeeManagement.Application.Interfaces.Services;
 using EnterpriseEmployeeManagement.Domain.Entities;
@@ -132,6 +133,41 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
             _repository.Delete(employee);
 
             return await _repository.SaveChangesAsync();
+        }
+
+        public async Task<PagedEmployeeResponseDto> GetPagedAsync(
+            EmployeeQueryDto query)
+        {
+            var result = await _repository.GetPagedAsync(
+                query.Page,
+                query.PageSize,
+                query.Search,
+                query.DepartmentId,
+                query.SortBy,
+                query.SortOrder);
+
+            var employees = result.Items.Select(e => new EmployeeResponseDto
+            {
+                Id = e.Id,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                Email = e.Email,
+                Salary = e.Salary,
+                DepartmentId = e.DepartmentId,
+                DepartmentName = e.Department?.Name ?? string.Empty,
+                RoleId = e.RoleId,
+                RoleName = e.Role?.Name ?? string.Empty
+            }).ToList();
+
+            return new PagedEmployeeResponseDto
+            {
+                Items = employees,
+                Page = query.Page,
+                PageSize = query.PageSize,
+                TotalCount = result.TotalCount,
+                TotalPages = (int)Math.Ceiling(
+                    result.TotalCount / (double)query.PageSize)
+            };
         }
 
         private static EmployeeResponseDto MapToResponse(

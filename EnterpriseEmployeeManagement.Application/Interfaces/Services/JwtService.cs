@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace EnterpriseEmployeeManagement.Infrastructure.Services
@@ -35,15 +36,37 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
                     employee.Role?.Name ?? string.Empty)
             };
 
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            // ============================================
+            // JWT KEY
+            // ============================================
+
+            var keyBytes = Encoding.UTF8.GetBytes(_jwtSettings.Key);
+
+            if (keyBytes.Length < 32)
+            {
+                keyBytes = SHA256.HashData(keyBytes);
+            }
+
+            var key = new SymmetricSecurityKey(keyBytes);
+
+            // ============================================
+            // SIGNING CREDENTIALS
+            // ============================================
 
             var credentials = new SigningCredentials(
                 key,
                 SecurityAlgorithms.HmacSha256);
 
+            // ============================================
+            // EXPIRATION
+            // ============================================
+
             var expires = DateTime.UtcNow.AddMinutes(
                 _jwtSettings.ExpireMinutes);
+
+            // ============================================
+            // CREATE TOKEN
+            // ============================================
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
@@ -52,8 +75,16 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
                 expires: expires,
                 signingCredentials: credentials);
 
+            // ============================================
+            // CONVERT TOKEN TO STRING
+            // ============================================
+
             var accessToken = new JwtSecurityTokenHandler()
                 .WriteToken(token);
+
+            // ============================================
+            // RESPONSE
+            // ============================================
 
             return new AuthenticationResponse
             {

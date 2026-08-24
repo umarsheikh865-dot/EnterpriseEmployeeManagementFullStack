@@ -1,22 +1,28 @@
-﻿using EnterpriseEmployeeManagement.Domain.Common;
-
-namespace EnterpriseEmployeeManagement.Domain.Entities
+﻿namespace EnterpriseEmployeeManagement.Domain.Entities
 {
-    public class RefreshToken : BaseEntity
+    public class RefreshToken
     {
-        // Refresh Token
+        public int Id { get; set; }
+
         public string Token { get; set; } = string.Empty;
 
-        // Expiration Date
-        public DateTime Expires { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        // Is token revoked?
-        public bool IsRevoked { get; set; }
+        public DateTime ExpiresAt { get; set; }
 
-        // Foreign Key
+        public DateTime? RevokedAt { get; set; }
+
         public int EmployeeId { get; set; }
 
-        // Navigation Property
         public Employee Employee { get; set; } = null!;
+
+        public bool IsRevoked =>
+            RevokedAt.HasValue;
+
+        public bool IsExpired =>
+            DateTime.UtcNow >= ExpiresAt;
+
+        public bool IsActive =>
+            !IsRevoked && !IsExpired;
     }
 }

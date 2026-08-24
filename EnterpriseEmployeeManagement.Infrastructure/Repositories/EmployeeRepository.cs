@@ -105,5 +105,111 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Repositories
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        // ============================================
+        // PAGINATED EMPLOYEES
+        // ============================================
+
+        public async Task<(IEnumerable<Employee> Items, int TotalCount)> GetPagedAsync(
+            int page,
+            int pageSize,
+            string? search,
+            int? departmentId,
+            string? sortBy,
+            string? sortOrder)
+        {
+            var query = _context.Employees
+                .Include(e => e.Department)
+                .Include(e => e.Role)
+                .AsQueryable();
+
+            // ============================================
+            // SEARCHING
+            // ============================================
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(e =>
+                    e.FirstName.Contains(search) ||
+                    e.LastName.Contains(search) ||
+                    e.Email.Contains(search));
+            }
+
+            // ============================================
+            // FILTERING BY DEPARTMENT
+            // ============================================
+
+            if (departmentId.HasValue)
+            {
+                query = query.Where(e =>
+                    e.DepartmentId == departmentId.Value);
+            }
+
+            // ============================================
+            // TOTAL COUNT
+            // ============================================
+
+            var totalCount = await query.CountAsync();
+
+            // ============================================
+            // SORTING
+            // ============================================
+
+            if (!string.IsNullOrWhiteSpace(sortBy))
+            {
+                if (sortBy.ToLower() == "firstname")
+                {
+                    if (sortOrder?.ToLower() == "desc")
+                    {
+                        query = query.OrderByDescending(e => e.FirstName);
+                    }
+                    else
+                    {
+                        query = query.OrderBy(e => e.FirstName);
+                    }
+                }
+                else if (sortBy.ToLower() == "lastname")
+                {
+                    if (sortOrder?.ToLower() == "desc")
+                    {
+                        query = query.OrderByDescending(e => e.LastName);
+                    }
+                    else
+                    {
+                        query = query.OrderBy(e => e.LastName);
+                    }
+                }
+                else if (sortBy.ToLower() == "email")
+                {
+                    if (sortOrder?.ToLower() == "desc")
+                    {
+                        query = query.OrderByDescending(e => e.Email);
+                    }
+                    else
+                    {
+                        query = query.OrderBy(e => e.Email);
+                    }
+                }
+                else
+                {
+                    query = query.OrderBy(e => e.Id);
+                }
+            }
+            else
+            {
+                query = query.OrderBy(e => e.Id);
+            }
+
+            // ============================================
+            // PAGINATION
+            // ============================================
+
+            var items = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
     }
 }

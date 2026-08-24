@@ -79,11 +79,32 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Persistence
             // RefreshToken → Employee
             // ========================================
 
-            modelBuilder.Entity<RefreshToken>()
-                .HasOne(r => r.Employee)
-                .WithMany(e => e.RefreshTokens)
-                .HasForeignKey(r => r.EmployeeId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // ========================================
+            // RefreshToken → Employee
+            // ========================================
+
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasKey(r => r.Id);
+
+                entity.Property(r => r.Token)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(r => r.CreatedAt)
+                    .IsRequired();
+
+                entity.Property(r => r.ExpiresAt)
+                    .IsRequired();
+
+                entity.Property(r => r.RevokedAt)
+                    .IsRequired(false);
+
+                entity.HasOne(r => r.Employee)
+                    .WithMany(e => e.RefreshTokens)
+                    .HasForeignKey(r => r.EmployeeId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             // ========================================
             // EMPLOYEE EMAIL

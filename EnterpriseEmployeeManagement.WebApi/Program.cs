@@ -1,11 +1,20 @@
+using EnterpriseEmployeeManagement.WebApi.Options;
+using EnterpriseEmployeeManagement.WebApi.Middleware;
+using EnterpriseEmployeeManagement.WebApi.ExceptionHandling;
+
 using EnterpriseEmployeeManagement.Application.Interfaces;
 using EnterpriseEmployeeManagement.Application.Interfaces.Repositories;
 using EnterpriseEmployeeManagement.Application.Interfaces.Services;
+using EnterpriseEmployeeManagement.Application.Validators;
+
 using EnterpriseEmployeeManagement.Infrastructure.DependencyInjection;
 using EnterpriseEmployeeManagement.Infrastructure.Repositories;
 using EnterpriseEmployeeManagement.Infrastructure.Services;
 
+using FluentValidation;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 
@@ -14,11 +23,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ============================================
-// JWT CONFIGURATION
-// ============================================
 
-var jwtSettings = builder.Configuration.GetSection("Jwt");
+// ============================================================
+// JWT CONFIGURATION
+// ============================================================
+
+var jwtSettings =
+    builder.Configuration.GetSection("JwtSettings");
 
 var jwtKey = jwtSettings["Key"];
 
@@ -29,54 +40,88 @@ if (string.IsNullOrWhiteSpace(jwtKey))
 }
 
 
-// ============================================
+// ============================================================
 // JWT KEY
-// ============================================
+// ============================================================
 
-var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
+var keyBytes =
+    Encoding.UTF8.GetBytes(jwtKey);
 
 if (keyBytes.Length < 32)
 {
-    keyBytes = SHA256.HashData(keyBytes);
+    keyBytes =
+        SHA256.HashData(keyBytes);
 }
 
-var securityKey = new SymmetricSecurityKey(keyBytes);
+var securityKey =
+    new SymmetricSecurityKey(keyBytes);
 
 
-// ============================================
+// ============================================================
 // CONTROLLERS
-// ============================================
+// ============================================================
 
 builder.Services.AddControllers();
 
 
-// ============================================
+// ============================================================
+// PROBLEM DETAILS
+// ============================================================
+
+builder.Services.AddProblemDetails();
+
+
+// ============================================================
+// FLUENTVALIDATION
+// ============================================================
+
+// builder.Services.AddValidatorsFromAssemblyContaining<
+//     CreateEmployeeValidator>();
+
+
+// ============================================================
+// GLOBAL EXCEPTION HANDLER
+// ============================================================
+
+builder.Services.AddExceptionHandler<
+    GlobalExceptionHandler>();
+
+
+// ============================================================
 // INFRASTRUCTURE
-// ============================================
+// ============================================================
 
 builder.Services.AddInfrastructure(
     builder.Configuration);
 
 
-// ============================================
+// ============================================================
 // EMPLOYEE REPOSITORY
-// ============================================
+// ============================================================
 
 builder.Services.AddScoped<EmployeeRepository>();
 
 
-// ============================================
+// ============================================================
 // APPLICATION SERVICES
-// ============================================
+// ============================================================
 
 builder.Services.AddScoped<
     IEmployeeService,
     EmployeeService>();
 
 
-// ============================================
+// ============================================================
+// OPTIONS PATTERN
+// ============================================================
+
+builder.Services.Configure<ApiSettings>(
+    builder.Configuration.GetSection("ApiSettings"));
+
+
+// ============================================================
 // JWT AUTHENTICATION
-// ============================================
+// ============================================================
 
 builder.Services
     .AddAuthentication(
@@ -89,30 +134,38 @@ builder.Services
             new TokenValidationParameters
             {
                 ValidateIssuer = true,
+
                 ValidateAudience = true,
+
                 ValidateLifetime = true,
+
                 ValidateIssuerSigningKey = true,
 
-                ValidIssuer = jwtSettings["Issuer"],
-                ValidAudience = jwtSettings["Audience"],
+                ValidIssuer =
+                    jwtSettings["Issuer"],
 
-                IssuerSigningKey = securityKey,
+                ValidAudience =
+                    jwtSettings["Audience"],
 
-                ClockSkew = TimeSpan.Zero
+                IssuerSigningKey =
+                    securityKey,
+
+                ClockSkew =
+                    TimeSpan.Zero
             };
     });
 
 
-// ============================================
+// ============================================================
 // AUTHORIZATION
-// ============================================
+// ============================================================
 
 builder.Services.AddAuthorization();
 
 
-// ============================================
+// ============================================================
 // SWAGGER
-// ============================================
+// ============================================================
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -122,14 +175,16 @@ builder.Services.AddSwaggerGen(options =>
         "v1",
         new OpenApiInfo
         {
-            Title = "EnterpriseEmployeeManagement.WebApi",
+            Title =
+                "Enterprise Employee Management API",
+
             Version = "v1"
         });
 
 
-    // ========================================
+    // ========================================================
     // JWT SECURITY DEFINITION
-    // ========================================
+    // ========================================================
 
     options.AddSecurityDefinition(
         "Bearer",
@@ -145,13 +200,14 @@ builder.Services.AddSwaggerGen(options =>
 
             In = ParameterLocation.Header,
 
-            Description = "Enter your JWT token."
+            Description =
+                "Enter your JWT token."
         });
 
 
-    // ========================================
+    // ========================================================
     // JWT SECURITY REQUIREMENT
-    // ========================================
+    // ========================================================
 
     options.AddSecurityRequirement(
         document =>
@@ -166,128 +222,69 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
-// ============================================
+// ============================================================
 // BUILD APPLICATION
-// ============================================
+// ============================================================
 
 var app = builder.Build();
 
 
-// ============================================
-// GLOBAL EXCEPTION HANDLING
-// ============================================
+// ============================================================
+// REQUEST LOGGING MIDDLEWARE
+// ============================================================
 
-app.UseExceptionHandler(errorApp =>
-{
-    errorApp.Run(async context =>
-    {
-        var exception =
-            context.Features
-                .Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()
-                ?.Error;
-
-        context.Response.ContentType = "application/json";
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 
-        // ----------------------------------------
-        // UNAUTHORIZED
-        // ----------------------------------------
+// ============================================================
+// GLOBAL EXCEPTION HANDLER
+// ============================================================
 
-        if (exception is UnauthorizedAccessException)
-        {
-            context.Response.StatusCode =
-                StatusCodes.Status401Unauthorized;
-
-            await context.Response.WriteAsJsonAsync(
-                new
-                {
-                    message = exception.Message
-                });
-
-            return;
-        }
+app.UseExceptionHandler();
 
 
-        // ----------------------------------------
-        // BAD REQUEST
-        // ----------------------------------------
-
-        if (exception is ArgumentException)
-        {
-            context.Response.StatusCode =
-                StatusCodes.Status400BadRequest;
-
-            await context.Response.WriteAsJsonAsync(
-                new
-                {
-                    message = exception.Message
-                });
-
-            return;
-        }
-
-
-        // ----------------------------------------
-        // CONFLICT
-        // ----------------------------------------
-
-        if (exception is InvalidOperationException)
-        {
-            context.Response.StatusCode =
-                StatusCodes.Status409Conflict;
-
-            await context.Response.WriteAsJsonAsync(
-                new
-                {
-                    message = exception.Message
-                });
-
-            return;
-        }
-
-
-        // ----------------------------------------
-        // INTERNAL SERVER ERROR
-        // ----------------------------------------
-
-        context.Response.StatusCode =
-            StatusCodes.Status500InternalServerError;
-
-        await context.Response.WriteAsJsonAsync(
-            new
-            {
-                message = "An unexpected error occurred."
-            });
-    });
-});
-
-
-// ============================================
+// ============================================================
 // SWAGGER
-// ============================================
+// ============================================================
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
+
     app.UseSwaggerUI();
 }
 
 
-// ============================================
-// MIDDLEWARE
-// ============================================
+// ============================================================
+// HTTPS
+// ============================================================
 
 app.UseHttpsRedirection();
 
+
+// ============================================================
+// AUTHENTICATION
+// ============================================================
+
 app.UseAuthentication();
+
+
+// ============================================================
+// AUTHORIZATION
+// ============================================================
 
 app.UseAuthorization();
 
 
-// ============================================
+// ============================================================
 // CONTROLLERS
-// ============================================
+// ============================================================
 
 app.MapControllers();
+
+
+// ============================================================
+// RUN APPLICATION
+// ============================================================
 
 app.Run();

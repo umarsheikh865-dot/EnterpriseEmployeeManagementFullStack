@@ -124,8 +124,8 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
             var refreshToken = new RefreshToken
             {
                 Token = GenerateRefreshToken(),
-                Expires = DateTime.UtcNow.AddDays(7),
-                IsRevoked = false,
+                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                RevokedAt = null,
                 EmployeeId = employee.Id
             };
 
@@ -173,7 +173,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
                     "Refresh token has been revoked.");
             }
 
-            if (refreshToken.Expires <= DateTime.UtcNow)
+            if (refreshToken.IsExpired)
             {
                 throw new UnauthorizedAccessException(
                     "Refresh token has expired.");
@@ -194,14 +194,14 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
                 _jwtService.GenerateToken(employee);
 
             // Revoke old refresh token
-            refreshToken.IsRevoked = true;
+            refreshToken.RevokedAt = DateTime.UtcNow;
 
             // Generate new refresh token
             var newRefreshToken = new RefreshToken
             {
                 Token = GenerateRefreshToken(),
-                Expires = DateTime.UtcNow.AddDays(7),
-                IsRevoked = false,
+                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                RevokedAt = null,
                 EmployeeId = employee.Id
             };
 
@@ -236,7 +236,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
 
             foreach (var refreshToken in employeeTokens)
             {
-                refreshToken.IsRevoked = true;
+                refreshToken.RevokedAt = DateTime.UtcNow;
             }
 
             await _unitOfWork.SaveChangesAsync();
