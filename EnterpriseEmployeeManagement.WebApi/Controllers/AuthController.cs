@@ -114,7 +114,7 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
         // ADMIN ONLY
         // ============================================
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("admin")]
         public IActionResult AdminOnly()
         {

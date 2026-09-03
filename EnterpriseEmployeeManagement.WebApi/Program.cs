@@ -1,28 +1,28 @@
-using EnterpriseEmployeeManagement.WebApi.Options;
-using EnterpriseEmployeeManagement.WebApi.Middleware;
-using EnterpriseEmployeeManagement.WebApi.ExceptionHandling;
-
 using EnterpriseEmployeeManagement.Application.Interfaces;
 using EnterpriseEmployeeManagement.Application.Interfaces.Repositories;
 using EnterpriseEmployeeManagement.Application.Interfaces.Services;
 using EnterpriseEmployeeManagement.Application.Validators;
-
 using EnterpriseEmployeeManagement.Infrastructure.DependencyInjection;
+using EnterpriseEmployeeManagement.Infrastructure.Persistence;
 using EnterpriseEmployeeManagement.Infrastructure.Repositories;
 using EnterpriseEmployeeManagement.Infrastructure.Services;
-
+using EnterpriseEmployeeManagement.WebApi.Controllers;
+using EnterpriseEmployeeManagement.WebApi.ExceptionHandling;
+using EnterpriseEmployeeManagement.WebApi.HealthChecks;
+using EnterpriseEmployeeManagement.WebApi.Middleware;
+using EnterpriseEmployeeManagement.WebApi.Options;
 using FluentValidation;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // ============================================================
 // JWT CONFIGURATION
@@ -31,14 +31,14 @@ var builder = WebApplication.CreateBuilder(args);
 var jwtSettings =
     builder.Configuration.GetSection("JwtSettings");
 
-var jwtKey = jwtSettings["Key"];
+var jwtKey =
+    jwtSettings["Key"];
 
 if (string.IsNullOrWhiteSpace(jwtKey))
 {
     throw new InvalidOperationException(
         "JWT Key is not configured.");
 }
-
 
 // ============================================================
 // JWT KEY
@@ -56,13 +56,77 @@ if (keyBytes.Length < 32)
 var securityKey =
     new SymmetricSecurityKey(keyBytes);
 
-
 // ============================================================
 // CONTROLLERS
 // ============================================================
 
 builder.Services.AddControllers();
 
+// ============================================================
+// HEALTH CHECKS
+// ============================================================
+
+builder.Services
+    .AddHealthChecks()
+
+    // Application is alive
+    .AddCheck(
+        "self",
+        () => HealthCheckResult.Healthy(),
+        tags: new[] { "live" })
+
+    // Database is available
+    .AddDbContextCheck<ApplicationDbContext>(
+        name: "database",
+        failureStatus: HealthStatus.Unhealthy,
+        tags: new[] { "ready" });
+
+// ============================================================
+// HTTP CLIENT FACTORY + RESILIENCE
+// ============================================================
+
+builder.Services
+    .AddHttpClient("ExternalApi")
+    .AddStandardResilienceHandler();
+
+// ============================================================
+// EXTERNAL API SERVICE
+// ============================================================
+
+builder.Services.AddScoped<ExternalApiService>();
+
+// ============================================================
+// RATE LIMITING
+// ============================================================
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter(
+        "fixed",
+        limiterOptions =>
+        {
+            limiterOptions.PermitLimit = 20;
+
+            limiterOptions.Window =
+                TimeSpan.FromSeconds(10);
+
+            limiterOptions.QueueProcessingOrder =
+                QueueProcessingOrder.OldestFirst;
+
+            limiterOptions.QueueLimit = 2;
+        });
+
+    options.OnRejected =
+        async (context, cancellationToken) =>
+        {
+            context.HttpContext.Response.StatusCode =
+                StatusCodes.Status429TooManyRequests;
+
+            await context.HttpContext.Response.WriteAsync(
+                "Too many requests. Please try again later.",
+                cancellationToken);
+        };
+});
 
 // ============================================================
 // PROBLEM DETAILS
@@ -70,14 +134,12 @@ builder.Services.AddControllers();
 
 builder.Services.AddProblemDetails();
 
-
 // ============================================================
-// FLUENTVALIDATION
+// FLUENT VALIDATION
 // ============================================================
 
 // builder.Services.AddValidatorsFromAssemblyContaining<
 //     CreateEmployeeValidator>();
-
 
 // ============================================================
 // GLOBAL EXCEPTION HANDLER
@@ -86,7 +148,6 @@ builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<
     GlobalExceptionHandler>();
 
-
 // ============================================================
 // INFRASTRUCTURE
 // ============================================================
@@ -94,13 +155,11 @@ builder.Services.AddExceptionHandler<
 builder.Services.AddInfrastructure(
     builder.Configuration);
 
-
 // ============================================================
 // EMPLOYEE REPOSITORY
 // ============================================================
 
 builder.Services.AddScoped<EmployeeRepository>();
-
 
 // ============================================================
 // APPLICATION SERVICES
@@ -110,14 +169,12 @@ builder.Services.AddScoped<
     IEmployeeService,
     EmployeeService>();
 
-
 // ============================================================
 // OPTIONS PATTERN
 // ============================================================
 
 builder.Services.Configure<ApiSettings>(
     builder.Configuration.GetSection("ApiSettings"));
-
 
 // ============================================================
 // JWT AUTHENTICATION
@@ -155,13 +212,26 @@ builder.Services
             };
     });
 
-
 // ============================================================
 // AUTHORIZATION
 // ============================================================
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(
+        "AdminOnly",
+        policy =>
+        {
+            policy.RequireRole("Admin");
+        });
 
+    options.AddPolicy(
+        "AuthenticatedUser",
+        policy =>
+        {
+            policy.RequireAuthenticatedUser();
+        });
+});
 
 // ============================================================
 // SWAGGER
@@ -180,7 +250,6 @@ builder.Services.AddSwaggerGen(options =>
 
             Version = "v1"
         });
-
 
     // ========================================================
     // JWT SECURITY DEFINITION
@@ -204,7 +273,6 @@ builder.Services.AddSwaggerGen(options =>
                 "Enter your JWT token."
         });
 
-
     // ========================================================
     // JWT SECURITY REQUIREMENT
     // ========================================================
@@ -217,10 +285,10 @@ builder.Services.AddSwaggerGen(options =>
                     new OpenApiSecuritySchemeReference(
                         "Bearer",
                         document)
-                ] = new List<string>()
+                ] =
+                    new List<string>()
             });
 });
-
 
 // ============================================================
 // BUILD APPLICATION
@@ -228,20 +296,17 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-
 // ============================================================
 // REQUEST LOGGING MIDDLEWARE
 // ============================================================
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 
-
 // ============================================================
 // GLOBAL EXCEPTION HANDLER
 // ============================================================
 
 app.UseExceptionHandler();
-
 
 // ============================================================
 // SWAGGER
@@ -254,13 +319,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 // ============================================================
 // HTTPS
 // ============================================================
 
 app.UseHttpsRedirection();
 
+// ============================================================
+// RATE LIMITING
+// ============================================================
+
+app.UseRateLimiter();
 
 // ============================================================
 // AUTHENTICATION
@@ -268,20 +337,53 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
-
 // ============================================================
 // AUTHORIZATION
 // ============================================================
 
 app.UseAuthorization();
 
+// ============================================================
+// HEALTH CHECKS
+// ============================================================
+
+app.MapHealthChecks(
+    "/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter =
+            HealthCheckResponseWriter.WriteResponse
+    });
+
+app.MapHealthChecks(
+    "/health/live",
+    new HealthCheckOptions
+    {
+        Predicate =
+            check =>
+                check.Tags.Contains("live"),
+
+        ResponseWriter =
+            HealthCheckResponseWriter.WriteResponse
+    });
+
+app.MapHealthChecks(
+    "/health/ready",
+    new HealthCheckOptions
+    {
+        Predicate =
+            check =>
+                check.Tags.Contains("ready"),
+
+        ResponseWriter =
+            HealthCheckResponseWriter.WriteResponse
+    });
 
 // ============================================================
 // CONTROLLERS
 // ============================================================
 
 app.MapControllers();
-
 
 // ============================================================
 // RUN APPLICATION
