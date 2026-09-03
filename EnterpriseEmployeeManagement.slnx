@@ -2,5 +2,6 @@
   <Project Path="EnterpriseEmployeeManagement.Application/EnterpriseEmployeeManagement.Application.csproj" />
   <Project Path="EnterpriseEmployeeManagement.Domain/EnterpriseEmployeeManagement.Domain.csproj" />
   <Project Path="EnterpriseEmployeeManagement.Infrastructure/EnterpriseEmployeeManagement.Infrastructure.csproj" />
+  <Project Path="EnterpriseEmployeeManagement.Tests/EnterpriseEmployeeManagement.Tests.csproj" Id="50a3528e-3dd8-4684-aaa0-fa477e618ac6" />
   <Project Path="EnterpriseEmployeeManagement.WebApi/EnterpriseEmployeeManagement.WebApi.csproj" />
 </Solution>

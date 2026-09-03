@@ -27,6 +27,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
 
             return await response.Content.ReadAsStringAsync(
                 cancellationToken);
-        }
+        } 
     }
 }
