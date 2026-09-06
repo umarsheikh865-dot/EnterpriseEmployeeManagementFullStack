@@ -1,4 +1,5 @@
-﻿using EnterpriseEmployeeManagement.Application.DTOs.Authentication;
+﻿using JwtSettingsOptions = EnterpriseEmployeeManagement.Infrastructure.Options.JwtSettings;
+using AuthResponse = EnterpriseEmployeeManagement.Application.DTOs.Authentication.AuthenticationResponse;
 using EnterpriseEmployeeManagement.Application.Interfaces.Services;
 using EnterpriseEmployeeManagement.Domain.Entities;
 using Microsoft.Extensions.Options;
@@ -12,14 +13,14 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
 {
     public class JwtService : IJwtService
     {
-        private readonly JwtSettings _jwtSettings;
+        private readonly JwtSettingsOptions _jwtSettings;
 
-        public JwtService(IOptions<JwtSettings> jwtSettings)
+        public JwtService(IOptions<JwtSettingsOptions> jwtSettings)
         {
             _jwtSettings = jwtSettings.Value;
         }
 
-        public AuthenticationResponse GenerateToken(Employee employee)
+        public AuthResponse GenerateToken(Employee employee)
         {
             var roleName = employee.Role?.Name;
 
@@ -96,7 +97,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
             // RETURN RESPONSE
             // ============================================
 
-            return new AuthenticationResponse
+            return new AuthResponse
             {
                 AccessToken = accessToken,
                 ExpiresAt = expires,

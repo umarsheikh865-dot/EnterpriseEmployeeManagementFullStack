@@ -13,5 +13,6 @@
         public string? SortBy { get; set; }
 
         public string? SortOrder { get; set; } = "asc";
+        public int PageNumber { get; set; }
     }
 }

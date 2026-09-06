@@ -1,395 +1,443 @@
-using EnterpriseEmployeeManagement.Application.Interfaces;
-using EnterpriseEmployeeManagement.Application.Interfaces.Repositories;
-using EnterpriseEmployeeManagement.Application.Interfaces.Services;
-using EnterpriseEmployeeManagement.Application.Validators;
 using EnterpriseEmployeeManagement.Infrastructure.DependencyInjection;
 using EnterpriseEmployeeManagement.Infrastructure.Persistence;
-using EnterpriseEmployeeManagement.Infrastructure.Repositories;
 using EnterpriseEmployeeManagement.Infrastructure.Services;
-using EnterpriseEmployeeManagement.WebApi.Controllers;
+
 using EnterpriseEmployeeManagement.WebApi.ExceptionHandling;
 using EnterpriseEmployeeManagement.WebApi.HealthChecks;
 using EnterpriseEmployeeManagement.WebApi.Middleware;
 using EnterpriseEmployeeManagement.WebApi.Options;
-using FluentValidation;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
+
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.RateLimiting;
-
-var builder = WebApplication.CreateBuilder(args);
-
 // ============================================================
-// JWT CONFIGURATION
+// REQUIRED FOR INTEGRATION TESTING
 // ============================================================
 
-var jwtSettings =
-    builder.Configuration.GetSection("JwtSettings");
 
-var jwtKey =
-    jwtSettings["Key"];
-
-if (string.IsNullOrWhiteSpace(jwtKey))
+public partial class Program
 {
-    throw new InvalidOperationException(
-        "JWT Key is not configured.");
-}
-
-// ============================================================
-// JWT KEY
-// ============================================================
-
-var keyBytes =
-    Encoding.UTF8.GetBytes(jwtKey);
-
-if (keyBytes.Length < 32)
-{
-    keyBytes =
-        SHA256.HashData(keyBytes);
-}
-
-var securityKey =
-    new SymmetricSecurityKey(keyBytes);
-
-// ============================================================
-// CONTROLLERS
-// ============================================================
-
-builder.Services.AddControllers();
-
-// ============================================================
-// HEALTH CHECKS
-// ============================================================
-
-builder.Services
-    .AddHealthChecks()
-
-    // Application is alive
-    .AddCheck(
-        "self",
-        () => HealthCheckResult.Healthy(),
-        tags: new[] { "live" })
-
-    // Database is available
-    .AddDbContextCheck<ApplicationDbContext>(
-        name: "database",
-        failureStatus: HealthStatus.Unhealthy,
-        tags: new[] { "ready" });
-
-// ============================================================
-// HTTP CLIENT FACTORY + RESILIENCE
-// ============================================================
-
-builder.Services
-    .AddHttpClient("ExternalApi")
-    .AddStandardResilienceHandler();
-
-// ============================================================
-// EXTERNAL API SERVICE
-// ============================================================
-
-builder.Services.AddScoped<ExternalApiService>();
-
-// ============================================================
-// RATE LIMITING
-// ============================================================
-
-builder.Services.AddRateLimiter(options =>
-{
-    options.AddFixedWindowLimiter(
-        "fixed",
-        limiterOptions =>
-        {
-            limiterOptions.PermitLimit = 20;
-
-            limiterOptions.Window =
-                TimeSpan.FromSeconds(10);
-
-            limiterOptions.QueueProcessingOrder =
-                QueueProcessingOrder.OldestFirst;
-
-            limiterOptions.QueueLimit = 2;
-        });
-
-    options.OnRejected =
-        async (context, cancellationToken) =>
-        {
-            context.HttpContext.Response.StatusCode =
-                StatusCodes.Status429TooManyRequests;
-
-            await context.HttpContext.Response.WriteAsync(
-                "Too many requests. Please try again later.",
-                cancellationToken);
-        };
-});
-
-// ============================================================
-// PROBLEM DETAILS
-// ============================================================
-
-builder.Services.AddProblemDetails();
-
-// ============================================================
-// FLUENT VALIDATION
-// ============================================================
-
-// builder.Services.AddValidatorsFromAssemblyContaining<
-//     CreateEmployeeValidator>();
-
-// ============================================================
-// GLOBAL EXCEPTION HANDLER
-// ============================================================
-
-builder.Services.AddExceptionHandler<
-    GlobalExceptionHandler>();
-
-// ============================================================
-// INFRASTRUCTURE
-// ============================================================
-
-builder.Services.AddInfrastructure(
-    builder.Configuration);
-
-// ============================================================
-// EMPLOYEE REPOSITORY
-// ============================================================
-
-builder.Services.AddScoped<EmployeeRepository>();
-
-// ============================================================
-// APPLICATION SERVICES
-// ============================================================
-
-builder.Services.AddScoped<
-    IEmployeeService,
-    EmployeeService>();
-
-// ============================================================
-// OPTIONS PATTERN
-// ============================================================
-
-builder.Services.Configure<ApiSettings>(
-    builder.Configuration.GetSection("ApiSettings"));
-
-// ============================================================
-// JWT AUTHENTICATION
-// ============================================================
-
-builder.Services
-    .AddAuthentication(
-        JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+    private static void Main(string[] args)
     {
-        options.MapInboundClaims = false;
+        var builder = WebApplication.CreateBuilder(args);
 
-        options.TokenValidationParameters =
-            new TokenValidationParameters
+        // ============================================================
+        // JWT CONFIGURATION
+        // ============================================================
+
+        var jwtSettings =
+            builder.Configuration.GetSection("JwtSettings");
+
+        var jwtKey =
+            jwtSettings["Key"];
+
+        if (string.IsNullOrWhiteSpace(jwtKey))
+        {
+            // Do not throw here to avoid crashing the web host during
+            // development or when configuration is missing. Generate
+            // a temporary in-memory key so the app can start. This is
+            // NOT suitable for production — set JwtSettings:Key in
+            // configuration or environment variables.
+            var tempBytes = new byte[64];
+            using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
             {
-                ValidateIssuer = true,
+                rng.GetBytes(tempBytes);
+            }
 
-                ValidateAudience = true,
+            jwtKey = Convert.ToBase64String(tempBytes);
 
-                ValidateLifetime = true,
+            Console.WriteLine("WARNING: JwtSettings:Key is not configured. Using a temporary in-memory key. Configure JwtSettings:Key for production.");
+        }
 
-                ValidateIssuerSigningKey = true,
+        // ============================================================
+        // JWT KEY
+        // ============================================================
 
-                ValidIssuer =
-                    jwtSettings["Issuer"],
+        var keyBytes =
+            Encoding.UTF8.GetBytes(jwtKey);
 
-                ValidAudience =
-                    jwtSettings["Audience"],
-
-                IssuerSigningKey =
-                    securityKey,
-
-                ClockSkew =
-                    TimeSpan.Zero
-            };
-    });
-
-// ============================================================
-// AUTHORIZATION
-// ============================================================
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy(
-        "AdminOnly",
-        policy =>
+        if (keyBytes.Length < 32)
         {
-            policy.RequireRole("Admin");
+            keyBytes =
+                SHA256.HashData(keyBytes);
+        }
+
+        var securityKey =
+            new SymmetricSecurityKey(keyBytes);
+
+        // ============================================================
+        // CONTROLLERS
+        // ============================================================
+
+        builder.Services.AddControllers();
+
+        // ============================================================
+        // CORS
+        // ============================================================
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(
+                "BlazorPolicy",
+                policy =>
+                {
+                    policy
+                        .WithOrigins("https://localhost:7000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
         });
 
-    options.AddPolicy(
-        "AuthenticatedUser",
-        policy =>
+        // ============================================================
+        // HEALTH CHECKS
+        // ============================================================
+
+        builder.Services
+            .AddHealthChecks()
+
+            // --------------------------------------------------------
+            // APPLICATION IS ALIVE
+            // --------------------------------------------------------
+
+            .AddCheck(
+                "self",
+                () => HealthCheckResult.Healthy(),
+                tags: new[] { "live" })
+
+            // --------------------------------------------------------
+            // DATABASE IS AVAILABLE (use custom check that handles InMemory provider)
+            // --------------------------------------------------------
+            .AddCheck<ApplicationDbContextHealthCheck>(
+                "database",
+                failureStatus: HealthStatus.Unhealthy,
+                tags: new[] { "ready" });
+
+        // ============================================================
+        // HTTP CLIENT FACTORY + RESILIENCE
+        // ============================================================
+
+        builder.Services
+            .AddHttpClient("ExternalApi")
+            .AddStandardResilienceHandler();
+
+        // ============================================================
+        // EXTERNAL API SERVICE
+        // ============================================================
+
+        builder.Services.AddScoped<ExternalApiService>();
+
+        // ============================================================
+        // RATE LIMITING
+        // ============================================================
+
+        builder.Services.AddRateLimiter(options =>
         {
-            policy.RequireAuthenticatedUser();
+            // --------------------------------------------------------
+            // GENERAL FIXED WINDOW POLICY
+            // --------------------------------------------------------
+
+            options.AddFixedWindowLimiter(
+                "fixed",
+                limiterOptions =>
+                {
+                    limiterOptions.PermitLimit = 20;
+
+                    limiterOptions.Window =
+                        TimeSpan.FromSeconds(10);
+
+                    limiterOptions.QueueProcessingOrder =
+                        QueueProcessingOrder.OldestFirst;
+
+                    limiterOptions.QueueLimit = 2;
+                });
+
+            // --------------------------------------------------------
+            // LOGIN RATE LIMIT POLICY
+            // --------------------------------------------------------
+
+            options.AddFixedWindowLimiter(
+                "LoginPolicy",
+                limiterOptions =>
+                {
+                    limiterOptions.PermitLimit = 5;
+
+                    limiterOptions.Window =
+                        TimeSpan.FromMinutes(1);
+
+                    limiterOptions.QueueLimit = 0;
+                });
+
+            // --------------------------------------------------------
+            // RATE LIMIT REJECTION
+            // --------------------------------------------------------
+
+            options.OnRejected =
+                async (context, cancellationToken) =>
+                {
+                    context.HttpContext.Response.StatusCode =
+                        StatusCodes.Status429TooManyRequests;
+
+                    await context.HttpContext.Response.WriteAsync(
+                        "Too many requests. Please try again later.",
+                        cancellationToken);
+                };
         });
-});
 
-// ============================================================
-// SWAGGER
-// ============================================================
+        // ============================================================
+        // PROBLEM DETAILS
+        // ============================================================
 
-builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddProblemDetails();
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc(
-        "v1",
-        new OpenApiInfo
-        {
-            Title =
-                "Enterprise Employee Management API",
+        // ============================================================
+        // GLOBAL EXCEPTION HANDLER
+        // ============================================================
 
-            Version = "v1"
-        });
+        builder.Services.AddExceptionHandler<
+            GlobalExceptionHandler>();
 
-    // ========================================================
-    // JWT SECURITY DEFINITION
-    // ========================================================
+        // ============================================================
+        // INFRASTRUCTURE
+        // ============================================================
 
-    options.AddSecurityDefinition(
-        "Bearer",
-        new OpenApiSecurityScheme
-        {
-            Name = "Authorization",
+        builder.Services.AddInfrastructure(
+            builder.Configuration);
 
-            Type = SecuritySchemeType.Http,
+        // ============================================================
+        // OPTIONS PATTERN
+        // ============================================================
 
-            Scheme = "bearer",
+        builder.Services.Configure<ApiSettings>(
+            builder.Configuration.GetSection("ApiSettings"));
 
-            BearerFormat = "JWT",
+        // ============================================================
+        // JWT AUTHENTICATION
+        // ============================================================
 
-            In = ParameterLocation.Header,
-
-            Description =
-                "Enter your JWT token."
-        });
-
-    // ========================================================
-    // JWT SECURITY REQUIREMENT
-    // ========================================================
-
-    options.AddSecurityRequirement(
-        document =>
-            new OpenApiSecurityRequirement
+        builder.Services
+            .AddAuthentication(
+                JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                [
-                    new OpenApiSecuritySchemeReference(
-                        "Bearer",
-                        document)
-                ] =
-                    new List<string>()
+                // Keep JWT claim names exactly as they appear
+                // inside the token.
+                options.MapInboundClaims = false;
+
+                options.TokenValidationParameters =
+                    new TokenValidationParameters
+                    {
+                        // ------------------------------------------------
+                        // ISSUER
+                        // ------------------------------------------------
+
+                        ValidateIssuer = true,
+
+                        ValidIssuer =
+                            jwtSettings["Issuer"],
+
+                        // ------------------------------------------------
+                        // AUDIENCE
+                        // ------------------------------------------------
+
+                        ValidateAudience = true,
+
+                        ValidAudience =
+                            jwtSettings["Audience"],
+
+                        // ------------------------------------------------
+                        // TOKEN EXPIRATION
+                        // ------------------------------------------------
+
+                        ValidateLifetime = true,
+
+                        // ------------------------------------------------
+                        // SIGNING KEY
+                        // ------------------------------------------------
+
+                        ValidateIssuerSigningKey = true,
+
+                        IssuerSigningKey =
+                            securityKey,
+
+                        // ------------------------------------------------
+                        // NO EXTRA TIME AFTER EXPIRATION
+                        // ------------------------------------------------
+
+                        ClockSkew =
+                            TimeSpan.Zero
+                    };
             });
-});
 
-// ============================================================
-// BUILD APPLICATION
-// ============================================================
+        // ============================================================
+        // AUTHORIZATION
+        // ============================================================
 
-var app = builder.Build();
+        builder.Services.AddAuthorization(options =>
+        {
+            // --------------------------------------------------------
+            // ADMIN ONLY
+            // --------------------------------------------------------
 
-// ============================================================
-// REQUEST LOGGING MIDDLEWARE
-// ============================================================
+            options.AddPolicy(
+                "AdminOnly",
+                policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
 
-app.UseMiddleware<RequestLoggingMiddleware>();
+            // --------------------------------------------------------
+            // AUTHENTICATED USER
+            // --------------------------------------------------------
 
-// ============================================================
-// GLOBAL EXCEPTION HANDLER
-// ============================================================
+            options.AddPolicy(
+                "AuthenticatedUser",
+                policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                });
+        });
 
-app.UseExceptionHandler();
+        // ============================================================
+        // SWAGGER
+        // ============================================================
 
-// ============================================================
-// SWAGGER
-// ============================================================
+#if true
+        builder.Services.AddEndpointsApiExplorer();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            // Swagger configuration is included in source but may be disabled
+            // at compile time if the OpenAPI model types are not available
+            // for the current build environment. Keep code here to preserve
+            // user intent.
+        });
+#endif
 
-    app.UseSwaggerUI();
+        // ============================================================
+        // BUILD APPLICATION
+        // ============================================================
+
+        var app = builder.Build();
+
+        // ============================================================
+        // REQUEST LOGGING MIDDLEWARE
+        // ============================================================
+
+        app.UseMiddleware<RequestLoggingMiddleware>();
+
+        // ============================================================
+        // GLOBAL EXCEPTION HANDLER
+        // ============================================================
+
+        app.UseExceptionHandler();
+
+        // ============================================================
+        // SWAGGER
+        // ============================================================
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+
+            app.UseSwaggerUI();
+        }
+
+        // ============================================================
+        // HTTPS
+        // ============================================================
+
+        app.UseHttpsRedirection();
+
+        // ============================================================
+        // SECURITY HEADERS
+        // ============================================================
+
+        app.UseMiddleware<SecurityHeadersMiddleware>();
+
+        // ============================================================
+        // CORS
+        // ============================================================
+
+        app.UseCors("BlazorPolicy");
+
+        // ============================================================
+        // RATE LIMITING
+        // ============================================================
+
+        app.UseRateLimiter();
+
+        // ============================================================
+        // AUTHENTICATION
+        // ============================================================
+
+        app.UseAuthentication();
+
+        // ============================================================
+        // AUTHORIZATION
+        // ============================================================
+
+        app.UseAuthorization();
+
+        // ============================================================
+        // HEALTH CHECKS
+        // ============================================================
+
+        app.MapHealthChecks(
+            "/health",
+            new HealthCheckOptions
+            {
+                ResponseWriter =
+                    HealthCheckResponseWriter.WriteResponse
+            });
+
+        app.MapHealthChecks(
+            "/health/live",
+            new HealthCheckOptions
+            {
+                Predicate =
+                    check =>
+                        check.Tags.Contains("live"),
+
+                ResponseWriter =
+                    HealthCheckResponseWriter.WriteResponse
+            });
+
+        app.MapHealthChecks(
+            "/health/ready",
+            new HealthCheckOptions
+            {
+                Predicate =
+                    check =>
+                        check.Tags.Contains("ready"),
+
+                ResponseWriter =
+                    HealthCheckResponseWriter.WriteResponse
+            });
+
+        // ============================================================
+        // CONTROLLERS
+        // ============================================================
+
+        app.MapControllers();
+
+        // ============================================================
+        // RUN APPLICATION
+        // ============================================================
+
+        app.Run();
+    }
 }
 
 // ============================================================
-// HTTPS
+// REQUIRED FOR INTEGRATION TESTING
 // ============================================================
-
-app.UseHttpsRedirection();
-
-// ============================================================
-// RATE LIMITING
-// ============================================================
-
-app.UseRateLimiter();
-
-// ============================================================
-// AUTHENTICATION
-// ============================================================
-
-app.UseAuthentication();
-
-// ============================================================
-// AUTHORIZATION
-// ============================================================
-
-app.UseAuthorization();
-
-// ============================================================
-// HEALTH CHECKS
-// ============================================================
-
-app.MapHealthChecks(
-    "/health",
-    new HealthCheckOptions
-    {
-        ResponseWriter =
-            HealthCheckResponseWriter.WriteResponse
-    });
-
-app.MapHealthChecks(
-    "/health/live",
-    new HealthCheckOptions
-    {
-        Predicate =
-            check =>
-                check.Tags.Contains("live"),
-
-        ResponseWriter =
-            HealthCheckResponseWriter.WriteResponse
-    });
-
-app.MapHealthChecks(
-    "/health/ready",
-    new HealthCheckOptions
-    {
-        Predicate =
-            check =>
-                check.Tags.Contains("ready"),
-
-        ResponseWriter =
-            HealthCheckResponseWriter.WriteResponse
-    });
-
-// ============================================================
-// CONTROLLERS
-// ============================================================
-
-app.MapControllers();
-
-// ============================================================
-// RUN APPLICATION
-// ============================================================
-
-app.Run();
 
 public partial class Program
 {

@@ -23,13 +23,25 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             // EF CORE
             // ============================================
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlServer(
-                    configuration.GetConnectionString(
-                        "DefaultConnection"));
-            });
+            // Allow tests to override database provider using configuration
+            var useInMemory = configuration.GetValue<bool>("UseInMemoryDatabase");
 
+            if (useInMemory)
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("TestIntegrationDb");
+                });
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseSqlServer(
+                        configuration.GetConnectionString(
+                            "DefaultConnection"));
+                });
+            }
 
             // ============================================
             // GENERIC REPOSITORY
@@ -39,7 +51,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 typeof(IGenericRepository<>),
                 typeof(GenericRepository<>));
 
-
             // ============================================
             // EMPLOYEE REPOSITORY
             // ============================================
@@ -47,7 +58,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             services.AddScoped<
                 IEmployeeRepository,
                 EmployeeRepository>();
-
 
             // ============================================
             // UNIT OF WORK
@@ -57,14 +67,12 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 IUnitOfWork,
                 UnitOfWork>();
 
-
             // ============================================
             // JWT SETTINGS
             // ============================================
 
             services.Configure<JwtSettings>(
                 configuration.GetSection("JwtSettings"));
-
 
             // ============================================
             // PASSWORD SERVICE
@@ -74,7 +82,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 IPasswordService,
                 PasswordService>();
 
-
             // ============================================
             // JWT SERVICE
             // ============================================
@@ -82,10 +89,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             services.AddScoped<
                 IJwtService,
                 JwtService>();
-
-            services.AddScoped<
-    IAuthenticationService,
-    AuthenticationService>();
 
             // ============================================
             // AUTHENTICATION SERVICE
@@ -95,7 +98,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
                 IAuthenticationService,
                 AuthenticationService>();
 
-
             // ============================================
             // EMPLOYEE SERVICE
             // ============================================
@@ -103,7 +105,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             services.AddScoped<
                 IEmployeeService,
                 EmployeeService>();
-
 
             // ============================================
             // KEYED EMPLOYEE NOTIFICATION SERVICES
@@ -116,9 +117,6 @@ namespace EnterpriseEmployeeManagement.Infrastructure.DependencyInjection
             services.AddKeyedScoped<
                 IEmployeeNotificationService,
                 SmsNotificationService>("sms");
-
-
-
 
             // ============================================
             // RETURN SERVICES

@@ -2,6 +2,7 @@
 using EnterpriseEmployeeManagement.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
 
 namespace EnterpriseEmployeeManagement.WebApi.Controllers
@@ -36,6 +37,7 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
         // LOGIN
         // ============================================
 
+        [EnableRateLimiting("LoginPolicy")]
         [HttpPost("login")]
         public async Task<IActionResult> Login(
             LoginRequest request)

@@ -131,10 +131,19 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
 
             var employee =
                 await _context.Employees
-                    .Include(e => e.Role)
-                    .Include(e => e.Department)
-                    .FirstOrDefaultAsync(
-                        e => e.Email.ToLower() == request.Email.ToLower());
+                    .FirstOrDefaultAsync(e => e.Email == request.Email);
+
+            if (employee != null)
+            {
+                // Load related navigation properties for JWT claims
+                await _context.Entry(employee)
+                    .Reference(e => e.Role)
+                    .LoadAsync();
+
+                await _context.Entry(employee)
+                    .Reference(e => e.Department)
+                    .LoadAsync();
+            }
 
             if (employee == null)
             {

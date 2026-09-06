@@ -1,4 +1,4 @@
-﻿namespace EnterpriseEmployeeManagement.Application.DTOs.Authentication
+﻿namespace EnterpriseEmployeeManagement.Infrastructure.Options
 {
     public class JwtSettings
     {

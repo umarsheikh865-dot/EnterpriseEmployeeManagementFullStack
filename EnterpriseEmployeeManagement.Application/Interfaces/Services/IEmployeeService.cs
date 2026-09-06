@@ -1,4 +1,5 @@
 ﻿using EnterpriseEmployeeManagement.Application.DTOs;
+using EnterpriseEmployeeManagement.Application.DTOs.Common;
 using EnterpriseEmployeeManagement.Application.DTOs.Employees;
 
 namespace EnterpriseEmployeeManagement.Application.Interfaces
@@ -9,12 +10,16 @@ namespace EnterpriseEmployeeManagement.Application.Interfaces
 
         Task<EmployeeResponseDto?> GetByIdAsync(int id);
 
-        Task<EmployeeResponseDto> CreateAsync(CreateEmployeeDto dto);
+        Task<EmployeeResponseDto> CreateAsync(
+            CreateEmployeeDto dto);
 
-        Task<EmployeeResponseDto?> UpdateAsync(int id, UpdateEmployeeDto dto);
+        Task<EmployeeResponseDto?> UpdateAsync(
+            int id,
+            UpdateEmployeeDto dto);
 
         Task<bool> DeleteAsync(int id);
 
-        Task<PagedEmployeeResponseDto> GetPagedAsync(EmployeeQueryDto query);
+        Task<PagedResponse<EmployeeResponseDto>> GetPagedAsync(
+            EmployeeQueryDto query);
     }
 }

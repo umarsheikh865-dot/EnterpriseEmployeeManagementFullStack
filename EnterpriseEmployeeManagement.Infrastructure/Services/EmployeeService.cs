@@ -1,19 +1,20 @@
 ﻿using EnterpriseEmployeeManagement.Application.DTOs;
+using EnterpriseEmployeeManagement.Application.DTOs.Common;
 using EnterpriseEmployeeManagement.Application.DTOs.Employees;
 using EnterpriseEmployeeManagement.Application.Interfaces;
 using EnterpriseEmployeeManagement.Application.Interfaces.Services;
 using EnterpriseEmployeeManagement.Domain.Entities;
-using EnterpriseEmployeeManagement.Infrastructure.Repositories;
+using EnterpriseEmployeeManagement.Application.Interfaces.Repositories;
 
 namespace EnterpriseEmployeeManagement.Infrastructure.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly EmployeeRepository _repository;
+        private readonly IEmployeeRepository _repository;
         private readonly IPasswordService _passwordService;
 
         public EmployeeService(
-            EmployeeRepository repository,
+            IEmployeeRepository repository,
             IPasswordService passwordService)
         {
             _repository = repository;
@@ -135,7 +136,7 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
             return await _repository.SaveChangesAsync();
         }
 
-        public async Task<PagedEmployeeResponseDto> GetPagedAsync(
+        public async Task<PagedResponse<EmployeeResponseDto>> GetPagedAsync(
             EmployeeQueryDto query)
         {
             var result = await _repository.GetPagedAsync(
@@ -159,14 +160,12 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
                 RoleName = e.Role?.Name ?? string.Empty
             }).ToList();
 
-            return new PagedEmployeeResponseDto
+            return new PagedResponse<EmployeeResponseDto>
             {
                 Items = employees,
-                Page = query.Page,
+                PageNumber = query.Page,
                 PageSize = query.PageSize,
-                TotalCount = result.TotalCount,
-                TotalPages = (int)Math.Ceiling(
-                    result.TotalCount / (double)query.PageSize)
+                TotalCount = result.TotalCount
             };
         }
 

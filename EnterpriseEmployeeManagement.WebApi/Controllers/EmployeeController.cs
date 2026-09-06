@@ -1,7 +1,8 @@
 ﻿using EnterpriseEmployeeManagement.Application.DTOs;
+using EnterpriseEmployeeManagement.Application.DTOs.Common;
 using EnterpriseEmployeeManagement.Application.DTOs.Employees;
 using EnterpriseEmployeeManagement.Application.Interfaces;
-using EnterpriseEmployeeManagement.Application.Interfaces.Services;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,25 +15,40 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
     {
         private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(
+            IEmployeeService employeeService)
         {
             _employeeService = employeeService;
         }
 
+        // ============================================================
+        // GET ALL EMPLOYEES
         // GET: api/Employee
+        // ============================================================
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeResponseDto>>> GetAll()
+        public async Task<
+            ActionResult<IEnumerable<EmployeeResponseDto>>>
+            GetAll()
         {
-            var employees = await _employeeService.GetAllAsync();
+            var employees =
+                await _employeeService.GetAllAsync();
 
             return Ok(employees);
         }
 
+        // ============================================================
+        // GET EMPLOYEE BY ID
         // GET: api/Employee/5
+        // ============================================================
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeResponseDto>> GetById(int id)
+        public async Task<
+            ActionResult<EmployeeResponseDto>>
+            GetById(int id)
         {
-            var employee = await _employeeService.GetByIdAsync(id);
+            var employee =
+                await _employeeService.GetByIdAsync(id);
 
             if (employee == null)
             {
@@ -42,22 +58,57 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
             return Ok(employee);
         }
 
+        // ============================================================
+        // GET PAGINATED EMPLOYEES
         // GET: api/Employee/paged
+        //
+        // Example:
+        // /api/Employee/paged?pageNumber=1&pageSize=10
+        // ============================================================
+
         [HttpGet("paged")]
-        public async Task<ActionResult<PagedEmployeeResponseDto>> GetPaged(
-            [FromQuery] EmployeeQueryDto query)
+        public async Task<
+            ActionResult<PagedResponse<EmployeeResponseDto>>>
+            GetPaged(
+                [FromQuery] EmployeeQueryDto query)
         {
-            var result = await _employeeService.GetPagedAsync(query);
+            var result =
+                await _employeeService.GetPagedAsync(query);
 
             return Ok(result);
         }
 
-        // POST: api/Employee
-        [HttpPost]
-        public async Task<ActionResult<EmployeeResponseDto>> Create(
-            CreateEmployeeDto dto)
+        // ============================================================
+        // SEARCH / FILTER EMPLOYEES
+        // GET: api/Employee/search
+        //
+        // This uses the same EmployeeQueryDto and
+        // IEmployeeService.
+        // ============================================================
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(
+            [FromQuery] EmployeeQueryDto query)
         {
-            var employee = await _employeeService.CreateAsync(dto);
+            var result =
+                await _employeeService.GetPagedAsync(query);
+
+            return Ok(result);
+        }
+
+        // ============================================================
+        // CREATE EMPLOYEE
+        // POST: api/Employee
+        // ============================================================
+
+        [HttpPost]
+        public async Task<
+            ActionResult<EmployeeResponseDto>>
+            Create(
+                CreateEmployeeDto dto)
+        {
+            var employee =
+                await _employeeService.CreateAsync(dto);
 
             return CreatedAtAction(
                 nameof(GetById),
@@ -65,13 +116,22 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
                 employee);
         }
 
+        // ============================================================
+        // UPDATE EMPLOYEE
         // PUT: api/Employee/5
+        // ============================================================
+
         [HttpPut("{id}")]
-        public async Task<ActionResult<EmployeeResponseDto>> Update(
-            int id,
-            UpdateEmployeeDto dto)
+        public async Task<
+            ActionResult<EmployeeResponseDto>>
+            Update(
+                int id,
+                UpdateEmployeeDto dto)
         {
-            var employee = await _employeeService.UpdateAsync(id, dto);
+            var employee =
+                await _employeeService.UpdateAsync(
+                    id,
+                    dto);
 
             if (employee == null)
             {
@@ -81,11 +141,17 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
             return Ok(employee);
         }
 
+        // ============================================================
+        // DELETE EMPLOYEE
         // DELETE: api/Employee/5
+        // ============================================================
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(
+            int id)
         {
-            var deleted = await _employeeService.DeleteAsync(id);
+            var deleted =
+                await _employeeService.DeleteAsync(id);
 
             if (!deleted)
             {

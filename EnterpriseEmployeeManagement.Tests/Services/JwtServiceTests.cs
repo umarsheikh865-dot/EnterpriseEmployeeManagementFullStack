@@ -1,10 +1,9 @@
-﻿using JwtSvcImpl = EnterpriseEmployeeManagement.Infrastructure.Services.JwtService;
-using JwtSettingsModel = EnterpriseEmployeeManagement.Infrastructure.Configuration.JwtSettings;
-using EnterpriseEmployeeManagement.Application.DTOs.Authentication;
-using EnterpriseEmployeeManagement.Domain.Entities;
+﻿using EnterpriseEmployeeManagement.Domain.Entities;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using JwtSettingsModel = EnterpriseEmployeeManagement.Infrastructure.Options.JwtSettings;
+using JwtSvcImpl = EnterpriseEmployeeManagement.Infrastructure.Services.Authentication.JwtService;
 
 namespace EnterpriseEmployeeManagement.Tests.Services
 {
