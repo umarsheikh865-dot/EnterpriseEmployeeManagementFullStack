@@ -1,148 +1,77 @@
-\# Enterprise Employee Management System
-
-
-
-A secure and scalable Employee Management REST API built with ASP.NET Core Web API, Entity Framework Core, SQL Server, JWT Authentication, Refresh Tokens, Role-Based Authorization, and Clean Architecture principles.
-
-
-
-\## 🚀 Project Overview
-
-
-
-Enterprise Employee Management is a backend API designed to manage employees and their organizational data.
-
-
-
-The system provides:
-
-
-
-\- Employee management
-
-\- Department management
-
-\- Role management
-
-\- Attendance management
-
-\- Leave request management
-
-\- User registration and login
-
-\- JWT authentication
-
-\- Refresh token authentication
-
-\- Logout and refresh-token revocation
-
-\- Role-based authorization
-
-\- Entity Framework Core
-
-\- SQL Server database
-
-\- Swagger/OpenAPI documentation
-
-\- Clean Architecture structure
-
-\- Repository and Unit of Work patterns
-
-
-
-\---
-
-
-
-\## 🛠️ Technologies Used
-
-
-
-\- C#
-
-\- .NET 10
-
-\- ASP.NET Core Web API
-
-\- Entity Framework Core
-
-\- SQL Server
-
-\- JWT Authentication
-
-\- Refresh Tokens
-
-\- Swagger / OpenAPI
-
-\- REST API
-
-\- Clean Architecture
-
-\- Repository Pattern
-
-\- Unit of Work Pattern
-
-\- Dependency Injection
-
-\- LINQ
-
-\- BCrypt Password Hashing
-
-
-
-\---
-
-
-
-\## 🏗️ Architecture
-
-
-
-The project follows a Clean Architecture approach:
-
-
-
-```text
-
-EnterpriseEmployeeManagement
-
-│
-
-├── EnterpriseEmployeeManagement.Domain
-
-│   ├── Common
-
-│   └── Entities
-
-│
-
-├── EnterpriseEmployeeManagement.Application
-
-│   ├── DTOs
-
-│   └── Interfaces
-
-│
-
-├── EnterpriseEmployeeManagement.Infrastructure
-
-│   ├── Persistence
-
-│   ├── Repositories
-
-│   ├── Services
-
-│   ├── Authentication
-
-│   └── Migrations
-
-│
-
-└── EnterpriseEmployeeManagement.WebApi
-
-&#x20;   ├── Controllers
-
-&#x20;   ├── Program.cs
-
-&#x20;   └── appsettings.json
-
+# Enterprise Employee Management Full Stack
+
+Enterprise Employee Management System built with ASP.NET Core Web API,
+Clean Architecture, Entity Framework Core, SQL Server, JWT Authentication,
+Role-Based Authorization, and automated testing.
+
+## 🚀 Features
+
+- Employee Management
+- Department Management
+- Role Management
+- Attendance Management
+- Leave Management
+- User Registration
+- Login
+- JWT Authentication
+- Refresh Tokens
+- Logout / Token Revocation
+- Role-Based Authorization
+- Validation
+- Global Exception Handling
+- Pagination
+- Searching
+- Filtering
+- Sorting
+- Rate Limiting
+- CORS
+- Health Checks
+- Background Services
+- SignalR
+- Unit Testing
+- Integration Testing
+
+## 🏗️ Architecture
+
+- Domain
+- Application
+- Infrastructure
+- WebApi
+- Tests
+
+## 🛠️ Technologies
+
+- C#
+- .NET 10
+- ASP.NET Core Web API
+- Entity Framework Core
+- SQL Server
+- JWT
+- xUnit
+- Moq
+- Swagger/OpenAPI
+
+## 🧪 Testing
+
+The project contains unit tests and integration tests.
+
+## 🔐 Security
+
+- JWT authentication
+- Role-based authorization
+- Password hashing
+- Refresh-token management
+- Rate limiting
+- Security headers
+- Input validation
+- Parameterized database queries
+
+## 📖 API Documentation
+
+Swagger/OpenAPI is available when running the API locally.
+
+## 🔮 Future Development
+
+- React frontend
+- Production deployment
+- Automated CI/CD
