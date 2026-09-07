@@ -16,10 +16,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.RateLimiting;
+
+
 // ============================================================
 // REQUIRED FOR INTEGRATION TESTING
 // ============================================================
-
 
 public partial class Program
 {
@@ -39,20 +40,23 @@ public partial class Program
 
         if (string.IsNullOrWhiteSpace(jwtKey))
         {
-            // Do not throw here to avoid crashing the web host during
-            // development or when configuration is missing. Generate
-            // a temporary in-memory key so the app can start. This is
-            // NOT suitable for production — set JwtSettings:Key in
-            // configuration or environment variables.
+            // Development fallback only.
+            // In Azure, configure JwtSettings:Key
+            // using Application Settings / Environment Variables.
+
             var tempBytes = new byte[64];
-            using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
+
+            using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(tempBytes);
             }
 
             jwtKey = Convert.ToBase64String(tempBytes);
 
-            Console.WriteLine("WARNING: JwtSettings:Key is not configured. Using a temporary in-memory key. Configure JwtSettings:Key for production.");
+            Console.WriteLine(
+                "WARNING: JwtSettings:Key is not configured. " +
+                "Using a temporary in-memory key. " +
+                "Configure JwtSettings:Key for production.");
         }
 
         // ============================================================
@@ -71,11 +75,13 @@ public partial class Program
         var securityKey =
             new SymmetricSecurityKey(keyBytes);
 
+
         // ============================================================
         // CONTROLLERS
         // ============================================================
 
         builder.Services.AddControllers();
+
 
         // ============================================================
         // CORS
@@ -84,16 +90,20 @@ public partial class Program
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(
-                "BlazorPolicy",
+                "FrontendPolicy",
                 policy =>
                 {
                     policy
-                        .WithOrigins("https://localhost:7000")
+                        // Development frontend
+                        .WithOrigins(
+                            "https://localhost:7000"
+                        )
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
                 });
         });
+
 
         // ============================================================
         // HEALTH CHECKS
@@ -112,12 +122,14 @@ public partial class Program
                 tags: new[] { "live" })
 
             // --------------------------------------------------------
-            // DATABASE IS AVAILABLE (use custom check that handles InMemory provider)
+            // DATABASE
             // --------------------------------------------------------
+
             .AddCheck<ApplicationDbContextHealthCheck>(
                 "database",
                 failureStatus: HealthStatus.Unhealthy,
                 tags: new[] { "ready" });
+
 
         // ============================================================
         // HTTP CLIENT FACTORY + RESILIENCE
@@ -127,11 +139,13 @@ public partial class Program
             .AddHttpClient("ExternalApi")
             .AddStandardResilienceHandler();
 
+
         // ============================================================
         // EXTERNAL API SERVICE
         // ============================================================
 
         builder.Services.AddScoped<ExternalApiService>();
+
 
         // ============================================================
         // RATE LIMITING
@@ -140,7 +154,7 @@ public partial class Program
         builder.Services.AddRateLimiter(options =>
         {
             // --------------------------------------------------------
-            // GENERAL FIXED WINDOW POLICY
+            // GENERAL RATE LIMIT
             // --------------------------------------------------------
 
             options.AddFixedWindowLimiter(
@@ -158,8 +172,9 @@ public partial class Program
                     limiterOptions.QueueLimit = 2;
                 });
 
+
             // --------------------------------------------------------
-            // LOGIN RATE LIMIT POLICY
+            // LOGIN RATE LIMIT
             // --------------------------------------------------------
 
             options.AddFixedWindowLimiter(
@@ -173,6 +188,7 @@ public partial class Program
 
                     limiterOptions.QueueLimit = 0;
                 });
+
 
             // --------------------------------------------------------
             // RATE LIMIT REJECTION
@@ -190,11 +206,13 @@ public partial class Program
                 };
         });
 
+
         // ============================================================
         // PROBLEM DETAILS
         // ============================================================
 
         builder.Services.AddProblemDetails();
+
 
         // ============================================================
         // GLOBAL EXCEPTION HANDLER
@@ -203,6 +221,7 @@ public partial class Program
         builder.Services.AddExceptionHandler<
             GlobalExceptionHandler>();
 
+
         // ============================================================
         // INFRASTRUCTURE
         // ============================================================
@@ -210,12 +229,14 @@ public partial class Program
         builder.Services.AddInfrastructure(
             builder.Configuration);
 
+
         // ============================================================
         // OPTIONS PATTERN
         // ============================================================
 
         builder.Services.Configure<ApiSettings>(
             builder.Configuration.GetSection("ApiSettings"));
+
 
         // ============================================================
         // JWT AUTHENTICATION
@@ -226,8 +247,9 @@ public partial class Program
                 JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                // Keep JWT claim names exactly as they appear
-                // inside the token.
+                // Keep JWT claim names exactly
+                // as they appear in the token.
+
                 options.MapInboundClaims = false;
 
                 options.TokenValidationParameters =
@@ -242,6 +264,7 @@ public partial class Program
                         ValidIssuer =
                             jwtSettings["Issuer"],
 
+
                         // ------------------------------------------------
                         // AUDIENCE
                         // ------------------------------------------------
@@ -251,11 +274,13 @@ public partial class Program
                         ValidAudience =
                             jwtSettings["Audience"],
 
+
                         // ------------------------------------------------
                         // TOKEN EXPIRATION
                         // ------------------------------------------------
 
                         ValidateLifetime = true,
+
 
                         // ------------------------------------------------
                         // SIGNING KEY
@@ -266,6 +291,7 @@ public partial class Program
                         IssuerSigningKey =
                             securityKey,
 
+
                         // ------------------------------------------------
                         // NO EXTRA TIME AFTER EXPIRATION
                         // ------------------------------------------------
@@ -274,6 +300,7 @@ public partial class Program
                             TimeSpan.Zero
                     };
             });
+
 
         // ============================================================
         // AUTHORIZATION
@@ -292,6 +319,7 @@ public partial class Program
                     policy.RequireRole("Admin");
                 });
 
+
             // --------------------------------------------------------
             // AUTHENTICATED USER
             // --------------------------------------------------------
@@ -304,21 +332,15 @@ public partial class Program
                 });
         });
 
+
         // ============================================================
         // SWAGGER
         // ============================================================
 
-#if true
         builder.Services.AddEndpointsApiExplorer();
 
-        builder.Services.AddSwaggerGen(options =>
-        {
-            // Swagger configuration is included in source but may be disabled
-            // at compile time if the OpenAPI model types are not available
-            // for the current build environment. Keep code here to preserve
-            // user intent.
-        });
-#endif
+        builder.Services.AddSwaggerGen();
+
 
         // ============================================================
         // BUILD APPLICATION
@@ -326,17 +348,20 @@ public partial class Program
 
         var app = builder.Build();
 
+
         // ============================================================
         // REQUEST LOGGING MIDDLEWARE
         // ============================================================
 
         app.UseMiddleware<RequestLoggingMiddleware>();
 
+
         // ============================================================
         // GLOBAL EXCEPTION HANDLER
         // ============================================================
 
         app.UseExceptionHandler();
+
 
         // ============================================================
         // SWAGGER
@@ -349,11 +374,13 @@ public partial class Program
             app.UseSwaggerUI();
         }
 
+
         // ============================================================
         // HTTPS
         // ============================================================
 
         app.UseHttpsRedirection();
+
 
         // ============================================================
         // SECURITY HEADERS
@@ -361,11 +388,13 @@ public partial class Program
 
         app.UseMiddleware<SecurityHeadersMiddleware>();
 
+
         // ============================================================
         // CORS
         // ============================================================
 
-        app.UseCors("BlazorPolicy");
+        app.UseCors("FrontendPolicy");
+
 
         // ============================================================
         // RATE LIMITING
@@ -373,11 +402,13 @@ public partial class Program
 
         app.UseRateLimiter();
 
+
         // ============================================================
         // AUTHENTICATION
         // ============================================================
 
         app.UseAuthentication();
+
 
         // ============================================================
         // AUTHORIZATION
@@ -385,8 +416,9 @@ public partial class Program
 
         app.UseAuthorization();
 
+
         // ============================================================
-        // HEALTH CHECKS
+        // HEALTH CHECK
         // ============================================================
 
         app.MapHealthChecks(
@@ -396,6 +428,11 @@ public partial class Program
                 ResponseWriter =
                     HealthCheckResponseWriter.WriteResponse
             });
+
+
+        // ============================================================
+        // LIVE HEALTH CHECK
+        // ============================================================
 
         app.MapHealthChecks(
             "/health/live",
@@ -409,6 +446,11 @@ public partial class Program
                     HealthCheckResponseWriter.WriteResponse
             });
 
+
+        // ============================================================
+        // READY HEALTH CHECK
+        // ============================================================
+
         app.MapHealthChecks(
             "/health/ready",
             new HealthCheckOptions
@@ -421,11 +463,13 @@ public partial class Program
                     HealthCheckResponseWriter.WriteResponse
             });
 
+
         // ============================================================
         // CONTROLLERS
         // ============================================================
 
         app.MapControllers();
+
 
         // ============================================================
         // RUN APPLICATION
@@ -434,6 +478,7 @@ public partial class Program
         app.Run();
     }
 }
+
 
 // ============================================================
 // REQUIRED FOR INTEGRATION TESTING

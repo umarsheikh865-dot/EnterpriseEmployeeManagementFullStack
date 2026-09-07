@@ -1,7 +1,24 @@
-﻿.vs/
+﻿# Build
 bin/
 obj/
+
+# Visual Studio
+.vs/
+.vscode/
 *.user
 *.suo
-*.userosscache
-*.sln.docstates
+
+# Local configuration
+appsettings.Local.json
+appsettings.Production.json
+
+# Environment variables
+.env
+.env.*
+
+# Test results
+TestResults/
+
+# User-specific files
+*.user
+*.rsuser
