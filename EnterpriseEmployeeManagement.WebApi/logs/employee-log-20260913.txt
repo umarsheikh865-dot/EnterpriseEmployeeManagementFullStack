@@ -1,0 +1,713 @@
+2026-09-13 14:40:12.152 -07:00 [INF] Starting Web API Application...
+2026-09-13 14:40:12.763 -07:00 [INF] User profile is available. Using 'C:\Users\Umar\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-09-13 14:40:13.003 -07:00 [INF] Now listening on: http://localhost:5094
+2026-09-13 14:40:13.010 -07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-13 14:40:13.014 -07:00 [INF] Hosting environment: Development
+2026-09-13 14:40:13.017 -07:00 [INF] Content root path: C:\Users\Umar\source\repos\EnterpriseEmployeeManagement\EnterpriseEmployeeManagement.WebApi
+2026-09-13 14:41:31.347 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:41:31.347 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:41:31.445 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:41:31.445 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:41:31.538 -07:00 [WRN] Failed to determine the https port for redirect.
+2026-09-13 14:41:31.729 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:41:31.729 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:41:31.740 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 302
+2026-09-13 14:41:31.740 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 302
+2026-09-13 14:41:31.779 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 443.4196ms
+2026-09-13 14:41:31.779 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 443.4167ms
+2026-09-13 14:41:31.797 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:41:31.812 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:41:31.838 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:41:31.997 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:41:32.034 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:41:32.045 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:41:32.093 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:41:34.709 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:41:34.731 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:41:34.737 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:41:34.744 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:41:34.750 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:41:34.753 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:41:34.762 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:41:35.612 -07:00 [INF] Executed DbCommand (161ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:41:35.612 -07:00 [INF] Executed DbCommand (161ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:41:35.920 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:41:35.920 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:41:35.987 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:41:35.995 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:41:35.995 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 1218.7344ms
+2026-09-13 14:41:35.995 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 3886.269ms
+2026-09-13 14:41:35.998 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:41:36.004 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:41:36.006 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:41:36.018 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:41:36.019 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 4207
+2026-09-13 14:41:36.019 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 1288
+2026-09-13 14:41:36.028 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:41:36.038 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:41:36.042 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:41:36.055 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 499 null application/json; charset=utf-8 4257.6191ms
+2026-09-13 14:41:36.055 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 1345.8106ms
+2026-09-13 14:41:36.122 -07:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:41:36.133 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:41:36.151 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 100.1835ms
+2026-09-13 14:41:36.158 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:41:36.161 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 166
+2026-09-13 14:41:36.168 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 180.7784ms
+2026-09-13 14:44:31.441 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:44:31.452 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:44:31.457 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:44:31.467 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:44:31.471 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:44:31.475 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:44:31.478 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 20
+2026-09-13 14:44:31.480 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 13
+2026-09-13 14:44:31.486 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 44.5918ms
+2026-09-13 14:44:31.492 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 40.1941ms
+2026-09-13 14:44:31.504 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:44:31.519 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:44:31.523 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:44:31.526 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:44:31.535 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:44:31.540 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:44:31.546 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:44:31.622 -07:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:44:31.641 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:44:31.649 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 76.2945ms
+2026-09-13 14:44:31.654 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:44:31.657 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:44:31.671 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:44:31.676 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 157
+2026-09-13 14:44:31.685 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:44:31.690 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 186.1401ms
+2026-09-13 14:44:31.701 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:44:31.730 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:44:31.736 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:44:31.744 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:44:31.763 -07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:44:31.776 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:44:31.788 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 33.1616ms
+2026-09-13 14:44:31.804 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:44:31.819 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 147
+2026-09-13 14:44:31.831 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 176.9984ms
+2026-09-13 14:46:34.949 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:46:34.958 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:46:34.966 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:46:34.976 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:46:34.982 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:46:34.985 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:46:34.987 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 21
+2026-09-13 14:46:34.990 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 14
+2026-09-13 14:46:34.995 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 45.6172ms
+2026-09-13 14:46:35.001 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 42.9513ms
+2026-09-13 14:46:35.009 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:46:35.025 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:46:35.031 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:46:35.037 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:46:35.073 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:46:35.104 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:46:35.116 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:46:35.168 -07:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:46:35.180 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:46:35.187 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 53.4617ms
+2026-09-13 14:46:35.190 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:46:35.196 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:46:35.210 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:46:35.215 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 190
+2026-09-13 14:46:35.220 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:46:35.234 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 224.3053ms
+2026-09-13 14:46:35.237 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:46:35.269 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:46:35.277 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:46:35.285 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:46:35.306 -07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:46:35.321 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:46:35.331 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 31.5982ms
+2026-09-13 14:46:35.336 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:46:35.341 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 130
+2026-09-13 14:46:35.352 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 162.2381ms
+2026-09-13 14:47:15.194 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:47:15.214 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:47:15.220 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:47:15.223 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 8
+2026-09-13 14:47:15.228 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 33.6828ms
+2026-09-13 14:47:15.238 -07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5094/api/employees - application/json 192
+2026-09-13 14:47:15.248 -07:00 [INF] Request started. Method: POST, Path: /api/employees
+2026-09-13 14:47:15.252 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:47:15.255 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:47:15.266 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:47:15.270 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:47:15.299 -07:00 [INF] Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]] Create(EnterpriseEmployeeManagement.Application.DTOs.Employees.CreateEmployeeDto) on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:47:15.383 -07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-09-13 14:47:15.426 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi) in 119.5273ms
+2026-09-13 14:47:15.431 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:47:15.435 -07:00 [INF] Request completed. Method: POST, Path: /api/employees, StatusCode: 400, DurationMs: 186
+2026-09-13 14:47:15.440 -07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5094/api/employees - 400 null application/problem+json; charset=utf-8 201.2954ms
+2026-09-13 14:48:51.781 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:48:51.801 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:48:51.808 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:48:51.811 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 10
+2026-09-13 14:48:51.817 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 36.3499ms
+2026-09-13 14:48:51.828 -07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5094/api/employees - application/json 192
+2026-09-13 14:48:51.837 -07:00 [INF] Request started. Method: POST, Path: /api/employees
+2026-09-13 14:48:51.841 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:48:51.844 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:48:51.855 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:48:51.858 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:48:51.862 -07:00 [INF] Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]] Create(EnterpriseEmployeeManagement.Application.DTOs.Employees.CreateEmployeeDto) on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:48:51.873 -07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-09-13 14:48:51.878 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi) in 9.6218ms
+2026-09-13 14:48:51.883 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:48:51.886 -07:00 [INF] Request completed. Method: POST, Path: /api/employees, StatusCode: 400, DurationMs: 49
+2026-09-13 14:48:51.892 -07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5094/api/employees - 400 null application/problem+json; charset=utf-8 63.7839ms
+2026-09-13 14:51:42.276 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:51:42.291 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:51:42.297 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:51:42.300 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 8
+2026-09-13 14:51:42.305 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 30.2436ms
+2026-09-13 14:51:42.320 -07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5094/api/employees - application/json 192
+2026-09-13 14:51:42.332 -07:00 [INF] Request started. Method: POST, Path: /api/employees
+2026-09-13 14:51:42.337 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:51:42.340 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:51:42.350 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:51:42.354 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:51:42.372 -07:00 [INF] Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]] Create(EnterpriseEmployeeManagement.Application.DTOs.Employees.CreateEmployeeDto) on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:51:42.382 -07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-09-13 14:51:42.386 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi) in 8.6335ms
+2026-09-13 14:51:42.393 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:51:42.396 -07:00 [INF] Request completed. Method: POST, Path: /api/employees, StatusCode: 400, DurationMs: 64
+2026-09-13 14:51:42.402 -07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5094/api/employees - 400 null application/problem+json; charset=utf-8 81.9441ms
+2026-09-13 14:54:48.551 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:54:48.571 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:54:48.576 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:54:48.579 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 8
+2026-09-13 14:54:48.584 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 33.3063ms
+2026-09-13 14:54:48.595 -07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5094/api/employees - application/json 192
+2026-09-13 14:54:48.603 -07:00 [INF] Request started. Method: POST, Path: /api/employees
+2026-09-13 14:54:48.609 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:54:48.611 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:54:48.619 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:54:48.623 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:54:48.626 -07:00 [INF] Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]] Create(EnterpriseEmployeeManagement.Application.DTOs.Employees.CreateEmployeeDto) on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:54:48.633 -07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-09-13 14:54:48.637 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi) in 5.7997ms
+2026-09-13 14:54:48.643 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:54:48.646 -07:00 [INF] Request completed. Method: POST, Path: /api/employees, StatusCode: 400, DurationMs: 42
+2026-09-13 14:54:48.652 -07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5094/api/employees - 400 null application/problem+json; charset=utf-8 57.763ms
+2026-09-13 14:56:25.600 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:56:25.607 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:56:25.611 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:56:25.614 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 7
+2026-09-13 14:56:25.618 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 18.7444ms
+2026-09-13 14:56:25.629 -07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5094/api/employees - application/json 192
+2026-09-13 14:56:25.639 -07:00 [INF] Request started. Method: POST, Path: /api/employees
+2026-09-13 14:56:25.645 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:56:25.649 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:56:25.659 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:56:25.664 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:56:25.668 -07:00 [INF] Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]] Create(EnterpriseEmployeeManagement.Application.DTOs.Employees.CreateEmployeeDto) on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:56:25.675 -07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-09-13 14:56:25.680 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi) in 7.2886ms
+2026-09-13 14:56:25.685 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:56:25.689 -07:00 [INF] Request completed. Method: POST, Path: /api/employees, StatusCode: 400, DurationMs: 49
+2026-09-13 14:56:25.695 -07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5094/api/employees - 400 null application/problem+json; charset=utf-8 65.9611ms
+2026-09-13 14:56:45.323 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:56:45.340 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:56:45.345 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:56:45.352 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:56:45.355 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:56:45.359 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:56:45.364 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 19
+2026-09-13 14:56:45.366 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 13
+2026-09-13 14:56:45.372 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 48.1478ms
+2026-09-13 14:56:45.378 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 37.7925ms
+2026-09-13 14:56:45.389 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:56:45.403 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:56:45.408 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:56:45.412 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:56:45.426 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:56:45.432 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:56:45.481 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:56:45.545 -07:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:56:45.563 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:56:45.579 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 79.6289ms
+2026-09-13 14:56:45.582 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:56:45.593 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:56:45.601 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:56:45.612 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 209
+2026-09-13 14:56:45.617 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:56:45.626 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 237.2472ms
+2026-09-13 14:56:45.631 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:56:45.665 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:56:45.673 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:56:45.678 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:56:45.713 -07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:56:45.725 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:56:45.734 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 48.8287ms
+2026-09-13 14:56:45.747 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:56:45.751 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 150
+2026-09-13 14:56:45.760 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 178.737ms
+2026-09-13 14:57:25.553 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:57:25.574 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:57:25.580 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:57:25.584 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 10
+2026-09-13 14:57:25.589 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 36.4198ms
+2026-09-13 14:57:25.600 -07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5094/api/employees - application/json 183
+2026-09-13 14:57:25.613 -07:00 [INF] Request started. Method: POST, Path: /api/employees
+2026-09-13 14:57:25.617 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:57:25.621 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:57:25.632 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:57:25.636 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:57:25.640 -07:00 [INF] Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]] Create(EnterpriseEmployeeManagement.Application.DTOs.Employees.CreateEmployeeDto) on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:57:25.648 -07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-09-13 14:57:25.652 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi) in 5.6824ms
+2026-09-13 14:57:25.656 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.Create (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:57:25.660 -07:00 [INF] Request completed. Method: POST, Path: /api/employees, StatusCode: 400, DurationMs: 47
+2026-09-13 14:57:25.665 -07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5094/api/employees - 400 null application/problem+json; charset=utf-8 64.7585ms
+2026-09-13 14:59:09.677 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/departments - null null
+2026-09-13 14:59:09.695 -07:00 [INF] Request started. Method: GET, Path: /api/departments
+2026-09-13 14:59:09.699 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:59:09.702 -07:00 [INF] Request completed. Method: GET, Path: /api/departments, StatusCode: 404, DurationMs: 7
+2026-09-13 14:59:09.707 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/departments - 404 0 null 30.8729ms
+2026-09-13 14:59:09.717 -07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5094/api/departments, Response status code: 404
+2026-09-13 14:59:09.722 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/departments - null null
+2026-09-13 14:59:09.730 -07:00 [INF] Request started. Method: GET, Path: /api/departments
+2026-09-13 14:59:09.733 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:59:09.736 -07:00 [INF] Request completed. Method: GET, Path: /api/departments, StatusCode: 404, DurationMs: 6
+2026-09-13 14:59:09.741 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/departments - 404 0 null 18.6565ms
+2026-09-13 14:59:09.750 -07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5094/api/departments, Response status code: 404
+2026-09-13 14:59:46.067 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:59:46.084 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 14:59:46.090 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:59:46.101 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 14:59:46.106 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:59:46.112 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:59:46.117 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 26
+2026-09-13 14:59:46.120 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 18
+2026-09-13 14:59:46.124 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 57.3377ms
+2026-09-13 14:59:46.132 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 48.5912ms
+2026-09-13 14:59:46.141 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:59:46.156 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:59:46.176 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:59:46.183 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:59:46.199 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:59:46.204 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:59:46.233 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:59:46.287 -07:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:59:46.302 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:59:46.312 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 62.9438ms
+2026-09-13 14:59:46.316 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 14:59:46.320 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:59:46.330 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 14:59:46.335 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 178
+2026-09-13 14:59:46.347 -07:00 [INF] CORS policy execution successful.
+2026-09-13 14:59:46.356 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 215.6369ms
+2026-09-13 14:59:46.360 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 14:59:46.387 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 14:59:46.394 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:59:46.402 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 14:59:46.419 -07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 14:59:46.433 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 14:59:46.437 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 23.1907ms
+2026-09-13 14:59:46.446 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 14:59:46.451 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 121
+2026-09-13 14:59:46.461 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 145.0639ms
+2026-09-13 15:20:17.573 -07:00 [INF] Application is shutting down...
+2026-09-13 15:29:09.975 -07:00 [INF] Starting Web API Application...
+2026-09-13 15:29:10.479 -07:00 [INF] User profile is available. Using 'C:\Users\Umar\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-09-13 15:29:10.677 -07:00 [INF] Now listening on: http://localhost:5094
+2026-09-13 15:29:10.687 -07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-13 15:29:10.690 -07:00 [INF] Hosting environment: Development
+2026-09-13 15:29:10.694 -07:00 [INF] Content root path: C:\Users\Umar\source\repos\EnterpriseEmployeeManagement\EnterpriseEmployeeManagement.WebApi
+2026-09-13 15:36:36.898 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 15:36:36.898 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/employees - null null
+2026-09-13 15:36:36.982 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 15:36:36.982 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/employees
+2026-09-13 15:36:37.062 -07:00 [WRN] Failed to determine the https port for redirect.
+2026-09-13 15:36:37.068 -07:00 [INF] CORS policy execution successful.
+2026-09-13 15:36:37.068 -07:00 [INF] CORS policy execution successful.
+2026-09-13 15:36:37.074 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 98
+2026-09-13 15:36:37.074 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/employees, StatusCode: 204, DurationMs: 98
+2026-09-13 15:36:37.094 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 201.1593ms
+2026-09-13 15:36:37.094 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/employees - 204 null null 200.9958ms
+2026-09-13 15:36:37.105 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 15:36:37.119 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 15:36:37.135 -07:00 [INF] CORS policy execution successful.
+2026-09-13 15:36:37.296 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 15:36:37.329 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 15:36:37.337 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 15:36:37.381 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 15:36:41.691 -07:00 [INF] Executed DbCommand (137ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 15:36:42.091 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 15:36:42.170 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-13 15:36:42.178 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-13 15:36:42.183 -07:00 [INF] CORS policy execution successful.
+2026-09-13 15:36:42.186 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 4783.1746ms
+2026-09-13 15:36:42.194 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 15:36:42.194 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 15:36:42.207 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 15:36:42.208 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 5089
+2026-09-13 15:36:42.210 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 15:36:42.220 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 15:36:42.235 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 5129.922ms
+2026-09-13 15:36:42.408 -07:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-13 15:36:42.418 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-13 15:36:42.425 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 199.259ms
+2026-09-13 15:36:42.431 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 15:36:42.435 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 256
+2026-09-13 15:36:42.442 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 271.843ms
+2026-09-13 15:37:49.797 -07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5094/api/attendance/verify-face - null null
+2026-09-13 15:37:49.812 -07:00 [INF] Request started. Method: OPTIONS, Path: /api/attendance/verify-face
+2026-09-13 15:37:49.818 -07:00 [INF] CORS policy execution successful.
+2026-09-13 15:37:49.821 -07:00 [INF] Request completed. Method: OPTIONS, Path: /api/attendance/verify-face, StatusCode: 204, DurationMs: 9
+2026-09-13 15:37:49.827 -07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5094/api/attendance/verify-face - 204 null null 29.6503ms
+2026-09-13 15:37:49.842 -07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5094/api/attendance/verify-face - application/json 33851
+2026-09-13 15:37:49.852 -07:00 [INF] Request started. Method: POST, Path: /api/attendance/verify-face
+2026-09-13 15:37:49.856 -07:00 [INF] CORS policy execution successful.
+2026-09-13 15:37:49.864 -07:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-09-13 15:37:49.874 -07:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'tKyDvqraGXN7kDugtzvaReRrEcJnILKof0jXGg2KkR0'. , KeyId: \r\n'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-09-13 15:37:49.883 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.AttendanceController.VerifyFace (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 15:37:49.910 -07:00 [INF] Route matched with {action = "VerifyFace", controller = "Attendance"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] VerifyFace(EnterpriseEmployeeManagement.WebApi.Controllers.FaceVerifyDto) on controller EnterpriseEmployeeManagement.WebApi.Controllers.AttendanceController (EnterpriseEmployeeManagement.WebApi).
+2026-09-13 15:37:49.991 -07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`7[[System.Boolean, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-09-13 15:37:50.018 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.AttendanceController.VerifyFace (EnterpriseEmployeeManagement.WebApi) in 101.7448ms
+2026-09-13 15:37:50.023 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.AttendanceController.VerifyFace (EnterpriseEmployeeManagement.WebApi)'
+2026-09-13 15:37:50.026 -07:00 [INF] Request completed. Method: POST, Path: /api/attendance/verify-face, StatusCode: 200, DurationMs: 174
+2026-09-13 15:37:50.032 -07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5094/api/attendance/verify-face - 200 null application/json; charset=utf-8 189.9993ms
+2026-09-13 15:37:57.019 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/departments - null null
+2026-09-13 15:37:57.029 -07:00 [INF] Request started. Method: GET, Path: /api/departments
+2026-09-13 15:37:57.033 -07:00 [INF] CORS policy execution successful.
+2026-09-13 15:37:57.038 -07:00 [INF] Request completed. Method: GET, Path: /api/departments, StatusCode: 404, DurationMs: 8
+2026-09-13 15:37:57.043 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/departments - 404 0 null 23.678ms
+2026-09-13 15:37:57.053 -07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5094/api/departments, Response status code: 404

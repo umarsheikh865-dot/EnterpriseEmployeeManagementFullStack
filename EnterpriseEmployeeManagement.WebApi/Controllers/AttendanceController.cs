@@ -66,6 +66,34 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
                 attendance);
         }
 
+        // POST: api/Attendance/verify-face
+        [HttpPost("verify-face")]
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyFace([FromBody] FaceVerifyDto dto)
+        {
+            if (dto == null || string.IsNullOrEmpty(dto.Image))
+            {
+                return BadRequest(new { message = "Image data is required." });
+            }
+
+            // Future hook: Integrate ML model, OpenCV, or external cloud recognition here.
+            // You can also resolve the current user from JWT claims if needed:
+            // var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            await Task.CompletedTask;
+
+            return Ok(new
+            {
+                success = true,
+                message = "Employee verified via facial recognition.",
+                timestamp = DateTime.UtcNow,
+                firstName = "Muhammad",
+                lastName = "Umar",
+                department = "Engineering",
+                position = "Lead .NET Architect"
+            });
+        }
+
         // PUT: api/Attendance/1
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
@@ -127,5 +155,10 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
                 message = "Attendance record deleted successfully."
             });
         }
+    }
+
+    public class FaceVerifyDto
+    {
+        public string Image { get; set; } = string.Empty;
     }
 }

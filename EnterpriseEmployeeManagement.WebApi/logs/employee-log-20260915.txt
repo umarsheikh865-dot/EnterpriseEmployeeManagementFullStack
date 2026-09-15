@@ -1,0 +1,37 @@
+2026-09-15 14:29:07.747 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-15 14:29:07.812 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-15 14:29:07.937 -07:00 [INF] CORS policy execution successful.
+2026-09-15 14:29:07.962 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-15 14:29:07.973 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-15 14:29:08.027 -07:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-15 14:29:08.057 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-15 14:29:08.063 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 79.91ms
+2026-09-15 14:29:08.071 -07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5094/api/employees - null null
+2026-09-15 14:29:08.072 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-15 14:29:08.078 -07:00 [INF] Request started. Method: GET, Path: /api/employees
+2026-09-15 14:29:08.084 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 271
+2026-09-15 14:29:08.087 -07:00 [INF] CORS policy execution successful.
+2026-09-15 14:29:08.093 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 345.5538ms
+2026-09-15 14:29:08.096 -07:00 [INF] Executing endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-15 14:29:08.108 -07:00 [INF] Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto]]] GetAll() on controller EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController (EnterpriseEmployeeManagement.WebApi).
+2026-09-15 14:29:08.139 -07:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[CreatedAt], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[LastName], [e].[PasswordHash], [e].[RoleId], [e].[Salary], [e].[UpdatedAt], [d].[Id], [d].[CreatedAt], [d].[Description], [d].[Name], [d].[UpdatedAt], [r].[Id], [r].[CreatedAt], [r].[Name], [r].[UpdatedAt]
+FROM [Employees] AS [e]
+INNER JOIN [Departments] AS [d] ON [e].[DepartmentId] = [d].[Id]
+INNER JOIN [Roles] AS [r] ON [e].[RoleId] = [r].[Id]
+2026-09-15 14:29:08.159 -07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[EnterpriseEmployeeManagement.Domain.Entities.Employee, EnterpriseEmployeeManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[EnterpriseEmployeeManagement.Application.DTOs.Employees.EmployeeResponseDto, EnterpriseEmployeeManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-15 14:29:08.167 -07:00 [INF] Executed action EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi) in 53.2108ms
+2026-09-15 14:29:08.177 -07:00 [INF] Executed endpoint 'EnterpriseEmployeeManagement.WebApi.Controllers.EmployeeController.GetAll (EnterpriseEmployeeManagement.WebApi)'
+2026-09-15 14:29:08.182 -07:00 [INF] Request completed. Method: GET, Path: /api/employees, StatusCode: 200, DurationMs: 103
+2026-09-15 14:29:08.189 -07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5094/api/employees - 200 null application/json; charset=utf-8 117.9497ms
+2026-09-15 14:52:42.437 -07:00 [INF] Application is shutting down...
+2026-09-15 14:52:59.428 -07:00 [INF] Starting Web API Application...
+2026-09-15 14:53:00.490 -07:00 [INF] User profile is available. Using 'C:\Users\Umar\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-09-15 14:53:00.744 -07:00 [INF] Now listening on: http://localhost:5094
+2026-09-15 14:53:00.753 -07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 14:53:00.756 -07:00 [INF] Hosting environment: Development
+2026-09-15 14:53:00.759 -07:00 [INF] Content root path: C:\Users\Umar\source\repos\EnterpriseEmployeeManagement\EnterpriseEmployeeManagement.WebApi

@@ -75,3 +75,9 @@ Swagger/OpenAPI is available when running the API locally.
 - React frontend
 - Production deployment
 - Automated CI/CD
+## 💳 Stripe Billing & Local Environment Note
+
+If you notice a console warning stating *"Stripe.js requires HTTPS"* while testing locally on `http://localhost:5173`:
+* **It is safe to ignore.** This is standard behavior for Stripe on non-secure local URLs. 
+* Because the app uses **Stripe Test Mode keys** (`pk_test_...`), test payments will process normally without blocking anything.
+* When deployed to production (on Vercel/Render), SSL/TLS certificates are handled automatically.
