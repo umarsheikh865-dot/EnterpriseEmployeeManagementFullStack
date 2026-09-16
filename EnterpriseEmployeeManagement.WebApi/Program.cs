@@ -152,7 +152,7 @@ public partial class Program
 
 
             // ============================================================
-            // HTTP CLIENT FACTORY + RESILIENCE
+            // HTTP CLIENT FACTORY + RESILIENCE (For ExternalApi)
             // ============================================================
 
             builder.Services
@@ -161,7 +161,7 @@ public partial class Program
 
 
             // ============================================================
-            // EXTERNAL API SERVICE
+            // EXTERNAL API SERVICE DI REGISTRATION
             // ============================================================
 
             builder.Services.AddScoped<ExternalApiService>();

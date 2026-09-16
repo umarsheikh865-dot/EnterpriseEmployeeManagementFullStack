@@ -1,4 +1,6 @@
 ﻿using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EnterpriseEmployeeManagement.Infrastructure.Services
 {
@@ -6,27 +8,22 @@ namespace EnterpriseEmployeeManagement.Infrastructure.Services
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public ExternalApiService(
-            IHttpClientFactory httpClientFactory)
+        public ExternalApiService(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<string> GetDataAsync(
-            CancellationToken cancellationToken = default)
+        public async Task<string> GetDataAsync(CancellationToken cancellationToken = default)
         {
-            var client =
-                _httpClientFactory.CreateClient("ExternalApi");
+            var client = _httpClientFactory.CreateClient("ExternalApi");
 
-            var response =
-                await client.GetAsync(
-                    "https://jsonplaceholder.typicode.com/todos/1",
-                    cancellationToken);
+            var response = await client.GetAsync(
+                "https://jsonplaceholder.typicode.com/todos/1",
+                cancellationToken);
 
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadAsStringAsync(
-                cancellationToken);
-        } 
+            return await response.Content.ReadAsStringAsync(cancellationToken);
+        }
     }
 }

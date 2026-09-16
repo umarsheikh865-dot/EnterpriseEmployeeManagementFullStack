@@ -1,433 +1,151 @@
-import React, { useEffect, useState } from 'react';
-import { employeeService, type Employee } from '../services/employeeService';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { Users, LogOut, CreditCard, ShieldAlert, Search, UserPlus, Trash2, Edit2, Download, Building2, ClipboardList, Activity } from 'lucide-react';
-import { StripeCheckout } from '../Stripe Billing/StripeCheckout';
-import { AIChatbot } from './AIChatbot';
-import { EmployeeModal } from './EmployeeModal';
-import apiClient from '../services/apiClient';
+import React, { useState } from 'react';
+import { MessageSquare, X, Send, Bot, User, Sparkles } from 'lucide-react';
+import { type Employee } from '../services/employeeService';
 
-export const Dashboard: React.FC = () => {
-    const [employees, setEmployees] = useState<Employee[]>([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
-    
-    // 1. Add activeTab state
-    const [activeTab, setActiveTab] = useState('directory');
-    const [departments, setDepartments] = useState<any[]>([]);
-    
-    const { userRole, logout } = useAuth();
-    const navigate = useNavigate();
+interface AIChatbotProps {
+    employees?: Employee[];
+}
 
-    useEffect(() => {
-        loadEmployees();
-    }, []);
+interface Message {
+    sender: 'user' | 'ai';
+    text: string;
+}
 
-    // Fetch departments when the 'departments' tab is selected
-    useEffect(() => {
-        if (activeTab === 'departments') {
-            apiClient.get('/departments')
-                .then(res => setDepartments(res.data))
-                .catch(err => {
-                    console.error('Failed to load departments, falling back to mock data', err);
-                    // Fallback mock departments if API is offline
-                    setDepartments([
-                        { id: 1, name: 'Engineering', employeeCount: 12, budget: '$150,000' },
-                        { id: 2, name: 'Management', employeeCount: 4, budget: '$90,000' },
-                        { id: 3, name: 'Human Resources', employeeCount: 5, budget: '$70,000' },
-                        { id: 4, name: 'Sales & Marketing', employeeCount: 8, budget: '$110,000' }
-                    ]);
-                });
+export const AIChatbot: React.FC<AIChatbotProps> = ({ employees = [] }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [input, setInput] = useState('');
+    const [messages, setMessages] = useState<Message[]>([
+        { 
+            sender: 'ai', 
+            text: 'Hello! I am your Enterprise AI Assistant. Ask me about employee counts, departments, specific staff members, or average salaries.' 
         }
-    }, [activeTab]);
+    ]);
 
-    const loadEmployees = async () => {
-        try {
-            const data = await employeeService.getAll();
-            setEmployees(data);
-        } catch (err) {
-            console.error('Failed to load employees', err);
-        }
-    };
+    const handleSend = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!input.trim()) return;
 
-    const handleDelete = async (id: number) => {
-        if (userRole !== 'Admin') {
-            alert('Unauthorized: Only administrators can delete records.');
-            return;
-        }
+        const userMessage = input.trim();
+        setMessages(prev => [...prev, { sender: 'user', text: userMessage }]);
+        setInput('');
 
-        if (window.confirm('Are you sure you want to delete this employee?')) {
-            try {
-                await employeeService.delete(id);
-                loadEmployees();
-            } catch (err) {
-                console.error('Failed to delete employee', err);
+        // Smart dynamic query parsing
+        setTimeout(() => {
+            const lowerQuery = userMessage.toLowerCase();
+            let aiResponse = "I'm not quite sure how to answer that. Try asking about 'total employees', 'departments', 'average salary', or search for a specific name.";
+
+            if (lowerQuery.includes('hello') || lowerQuery.includes('hi') || lowerQuery.includes('hey')) {
+                aiResponse = "Hello! How can I assist you with your enterprise management tasks today?";
+            } 
+            else if (lowerQuery.includes('how many') || lowerQuery.includes('total') || lowerQuery.includes('count')) {
+                aiResponse = `There are currently ${employees.length} employees registered in the system database.`;
+            } 
+            else if (lowerQuery.includes('department') || lowerQuery.includes('teams')) {
+                const depts = Array.from(new Set(employees.map(e => e.department || 'Engineering')));
+                aiResponse = `We have active personnel across the following departments: ${depts.join(', ')}.`;
+            } 
+            else if (lowerQuery.includes('salary') || lowerQuery.includes('pay') || lowerQuery.includes('average')) {
+                if (employees.length === 0) {
+                    aiResponse = "No employee salary data is currently loaded to calculate an average.";
+                } else {
+                    const totalSalary = employees.reduce((acc, curr) => acc + (curr.salary || 75000), 0);
+                    const avgSalary = Math.round(totalSalary / employees.length);
+                    aiResponse = `The average employee salary across the enterprise is approximately $${avgSalary.toLocaleString()}.`;
+                }
+            } 
+            else {
+                // Check if the user is searching for a specific employee name
+                const matchedEmployee = employees.find(emp => 
+                    lowerQuery.includes(emp.firstName.toLowerCase()) || 
+                    lowerQuery.includes(emp.lastName.toLowerCase())
+                );
+
+                if (matchedEmployee) {
+                    const pos = matchedEmployee.position || (matchedEmployee as any).jobTitle || 'Software Engineer';
+                    aiResponse = `Found record: ${matchedEmployee.firstName} ${matchedEmployee.lastName} works as a ${pos} in the ${matchedEmployee.department || 'Engineering'} department. Email: ${matchedEmployee.email}.`;
+                }
             }
-        }
+
+            setMessages(prev => [...prev, { sender: 'ai', text: aiResponse }]);
+        }, 600);
     };
-
-    const handleExportCsv = () => {
-        if (!employees || employees.length === 0) return;
-
-        const headers = ['ID', 'First Name', 'Last Name', 'Email', 'Department', 'Position', 'Salary'];
-        const rows = employees.map(emp => [
-            emp.id ?? '',
-            `"${emp.firstName ?? ''}"`,
-            `"${emp.lastName ?? ''}"`,
-            `"${emp.email ?? ''}"`,
-            `"${emp.department ?? ''}"`,
-            `"${emp.position || (emp as any).jobTitle || (emp as any).title || 'Software Engineer'}"`, 
-            emp.salary ?? 0
-        ]);
-
-        const csvContent = [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        
-        const timestamp = new Date().toISOString().split('T')[0];
-        link.setAttribute('href', url);
-        link.setAttribute('download', `Employee_Directory_${timestamp}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
-    const filteredEmployees = employees.filter((emp) => {
-        const query = searchTerm.toLowerCase();
-        const positionVal = emp.position || (emp as any).jobTitle || (emp as any).title || '';
-        return (
-            emp.firstName.toLowerCase().includes(query) ||
-            emp.lastName.toLowerCase().includes(query) ||
-            emp.email.toLowerCase().includes(query) ||
-            emp.department.toLowerCase().includes(query) ||
-            positionVal.toLowerCase().includes(query)
-        );
-    });
 
     return (
-        <div className="min-h-screen bg-gray-950 text-gray-100 font-sans">
-            {/* Top Navigation Bar */}
-            <nav className="flex items-center justify-between border-b border-gray-800 bg-gray-900 px-6 py-4 shadow-md">
-                <div className="flex items-center space-x-3">
-                    <Users className="h-6 w-6 text-purple-400" />
-                    <span className="text-xl font-bold tracking-wide">Enterprise Portal</span>
-                    {userRole && (
-                        <span className="rounded-full bg-purple-900/50 px-3 py-1 text-xs font-semibold text-purple-300 border border-purple-700">
-                            Role: {userRole}
-                        </span>
-                    )}
-                </div>
+        <div className="fixed bottom-6 right-6 z-50">
+            {!isOpen ? (
                 <button
-                    onClick={() => { logout(); navigate('/login'); }}
-                    className="flex items-center space-x-2 rounded-lg bg-gray-800 px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition"
+                    onClick={() => setIsOpen(true)}
+                    className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-3 rounded-full shadow-2xl transition transform hover:scale-105"
                 >
-                    <LogOut className="h-4 w-4" />
-                    <span>Logout</span>
+                    <MessageSquare size={20} />
+                    <span className="text-sm font-semibold">AI Assistant</span>
                 </button>
-            </nav>
-
-            {/* Main Content Area */}
-            <main className="p-8 max-w-7xl mx-auto space-y-6">
-                
-                {/* Secondary Navigation Tabs */}
-                <div className="flex space-x-2 border-b border-gray-800 pb-3">
-                    <button
-                        onClick={() => setActiveTab('directory')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition ${
-                            activeTab === 'directory' 
-                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' 
-                                : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white'
-                        }`}
-                    >
-                        <Users size={16} />
-                        <span>Directory Overview</span>
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('departments')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition ${
-                            activeTab === 'departments' 
-                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' 
-                                : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white'
-                        }`}
-                    >
-                        <Building2 size={16} />
-                        <span>Department Registry</span>
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('attendance')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition ${
-                            activeTab === 'attendance' 
-                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' 
-                                : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white'
-                        }`}
-                    >
-                        <ClipboardList size={16} />
-                        <span>Attendance Logs</span>
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('audit')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition ${
-                            activeTab === 'audit' 
-                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' 
-                                : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white'
-                        }`}
-                    >
-                        <Activity size={16} />
-                        <span>Security Audit Trail</span>
-                    </button>
-                </div>
-
-                {/* TAB 1: DIRECTORY OVERVIEW */}
-                {activeTab === 'directory' && (
-                    <div className="space-y-6">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                            <div>
-                                <h1 className="text-2xl font-semibold">Employee Directory</h1>
-                                <p className="text-sm text-gray-400">Manage active personnel records securely via ASP.NET Core API.</p>
-                            </div>
-                            
-                            <div className="flex items-center space-x-3 w-full sm:w-auto flex-wrap gap-y-2">
-                                <div className="relative w-full sm:w-64">
-                                    <Search className="absolute left-3.5 top-3 text-gray-500" size={16} />
-                                    <input
-                                        type="text"
-                                        placeholder="Search records..."
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="w-full bg-gray-900 border border-gray-800 rounded-xl pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition-colors"
-                                    />
-                                </div>
-                                <button
-                                    onClick={handleExportCsv}
-                                    className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-xl text-sm font-semibold transition border border-gray-700 whitespace-nowrap"
-                                >
-                                    <Download size={16} />
-                                    <span>Export CSV</span>
-                                </button>
-                                <button
-                                    onClick={() => { setEditingEmployee(null); setIsModalOpen(true); }}
-                                    className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow-lg shadow-purple-600/20 whitespace-nowrap"
-                                >
-                                    <UserPlus size={16} />
-                                    <span>Add Employee</span>
-                                </button>
-                            </div>
+            ) : (
+                <div className="w-80 sm:w-96 bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl flex flex-col h-[480px] overflow-hidden">
+                    {/* Chat Header */}
+                    <div className="flex items-center justify-between bg-gray-850 px-4 py-3 border-b border-gray-800">
+                        <div className="flex items-center space-x-2">
+                            <Bot size={18} className="text-purple-400" />
+                            <span className="text-sm font-bold text-white flex items-center gap-1.5">
+                                Enterprise AI <Sparkles size={12} className="text-purple-400" />
+                            </span>
                         </div>
-
-                        <div className="overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-xl">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-gray-800 bg-gray-850 text-xs uppercase text-gray-400">
-                                        <th className="p-4">Name</th>
-                                        <th className="p-4">Email</th>
-                                        <th className="p-4">Department</th>
-                                        <th className="p-4">Position</th>
-                                        <th className="p-4">Salary</th>
-                                        <th className="p-4 text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-800">
-                                    {filteredEmployees.map((emp) => (
-                                        <tr key={emp.id} className="hover:bg-gray-800/40 transition">
-                                            <td className="p-4 font-medium">{emp.firstName} {emp.lastName}</td>
-                                            <td className="p-4 text-gray-400">{emp.email}</td>
-                                            <td className="p-4">
-                                                <span className="px-2.5 py-1 rounded-full text-xs font-medium border bg-purple-950/65 text-purple-300 border-purple-800">
-                                                    {emp.department || 'Engineering'}
-                                                </span>
-                                            </td>
-                                            <td className="p-4 text-gray-300">
-                                                {emp.position || (emp as any).jobTitle || (emp as any).title || 'Software Engineer'}
-                                            </td>
-                                            <td className="p-4 text-emerald-400 font-medium">
-                                                ${emp.salary ? emp.salary.toLocaleString() : '75,000'}
-                                            </td>
-                                            <td className="p-4 text-right space-x-2">
-                                                {userRole === 'Admin' ? (
-                                                    <div className="flex items-center justify-end space-x-2">
-                                                        <button
-                                                            onClick={() => { setEditingEmployee(emp); setIsModalOpen(true); }}
-                                                            className="p-1.5 text-purple-400 hover:text-purple-300 hover:bg-purple-950/40 rounded-lg transition"
-                                                            title="Edit Employee"
-                                                        >
-                                                            <Edit2 size={16} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleDelete(emp.id!)}
-                                                            className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-950/40 rounded-lg transition"
-                                                            title="Delete Employee"
-                                                        >
-                                                            <Trash2 size={16} />
-                                                        </button>
-                                                    </div>
-                                                ) : (
-                                                    <span className="text-xs text-gray-600 italic">View Only</span>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {filteredEmployees.length === 0 && (
-                                        <tr>
-                                            <td colSpan={6} className="p-8 text-center text-gray-500">
-                                                No employee records found.
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                        <button
+                            onClick={() => setIsOpen(false)}
+                            className="text-gray-400 hover:text-white transition"
+                        >
+                            <X size={18} />
+                        </button>
                     </div>
-                )}
 
-                {/* TAB 2: DEPARTMENT REGISTRY */}
-                {activeTab === 'departments' && (
-                    <div className="space-y-6">
-                        <div>
-                            <h1 className="text-2xl font-semibold">Department Registry</h1>
-                            <p className="text-sm text-gray-400">Fetched dynamically from backend registry endpoint.</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {departments.map((dept, index) => (
-                                <div key={dept.id || index} className="rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-xl space-y-3">
-                                    <div className="flex items-center justify-between">
-                                        <Building2 className="h-6 w-6 text-purple-400" />
-                                        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-purple-950 text-purple-300 border border-purple-800">
-                                            Active
-                                        </span>
+                    {/* Chat Messages */}
+                    <div className="flex-1 overflow-y-auto p-4 space-y-3 text-sm">
+                        {messages.map((msg, index) => (
+                            <div
+                                key={index}
+                                className={`flex items-start space-x-2 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                            >
+                                {msg.sender === 'ai' && (
+                                    <div className="w-7 h-7 rounded-full bg-purple-950 border border-purple-800 flex items-center justify-center text-purple-300 shrink-0">
+                                        <Bot size={14} />
                                     </div>
-                                    <h2 className="text-lg font-bold">{dept.name || dept.departmentName}</h2>
-                                    <p className="text-sm text-gray-400">Personnel: <span className="text-white font-medium">{dept.employeeCount || 'N/A'}</span></p>
-                                    <p className="text-sm text-gray-400">Allocated Budget: <span className="text-emerald-400 font-medium">{dept.budget || '$100,000'}</span></p>
+                                )}
+                                <div
+                                    className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 leading-relaxed ${
+                                        msg.sender === 'user'
+                                            ? 'bg-purple-600 text-white rounded-br-none'
+                                            : 'bg-gray-800 text-gray-200 border border-gray-700 rounded-bl-none'
+                                    }`}
+                                >
+                                    {msg.text}
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* TAB 3: ATTENDANCE LOGS */}
-                {activeTab === 'attendance' && (
-                    <div className="space-y-6">
-                        <div>
-                            <h1 className="text-2xl font-semibold">Attendance Logs</h1>
-                            <p className="text-sm text-gray-400">Real-time biometric & system authentication check-ins.</p>
-                        </div>
-                        <div className="overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-xl">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-gray-800 bg-gray-850 text-xs uppercase text-gray-400">
-                                        <th className="p-4">Timestamp</th>
-                                        <th className="p-4">User / Staff</th>
-                                        <th className="p-4">Action Type</th>
-                                        <th className="p-4">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-800 text-sm">
-                                    <tr className="hover:bg-gray-800/40">
-                                        <td className="p-4 text-gray-400">2026-09-16 09:30 AM</td>
-                                        <td className="p-4 font-medium">Muhammad Umar (Admin)</td>
-                                        <td className="p-4 text-gray-300">Biometric Facial Check-In</td>
-                                        <td className="p-4"><span className="px-2 py-1 rounded text-xs bg-emerald-950 text-emerald-300 border border-emerald-800">Success</span></td>
-                                    </tr>
-                                    <tr className="hover:bg-gray-800/40">
-                                        <td className="p-4 text-gray-400">2026-09-16 08:45 AM</td>
-                                        <td className="p-4 font-medium">Sarah Jenkins</td>
-                                        <td className="p-4 text-gray-300">Remote Check-In Portal</td>
-                                        <td className="p-4"><span className="px-2 py-1 rounded text-xs bg-emerald-950 text-emerald-300 border border-emerald-800">Success</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
-
-                {/* TAB 4: SECURITY AUDIT TRAIL */}
-                {activeTab === 'audit' && (
-                    <div className="space-y-6">
-                        <div>
-                            <h1 className="text-2xl font-semibold">Security Audit Trail</h1>
-                            <p className="text-sm text-gray-400">Track system activities, permissions overrides, and database operations.</p>
-                        </div>
-                        <div className="overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-xl">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-gray-800 bg-gray-850 text-xs uppercase text-gray-400">
-                                        <th className="p-4">Timestamp</th>
-                                        <th className="p-4">Event Description</th>
-                                        <th className="p-4">Severity Level</th>
-                                        <th className="p-4">Status Badge</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-800 text-sm">
-                                    <tr className="hover:bg-gray-800/40">
-                                        <td className="p-4 text-gray-400">2026-09-16 10:15 AM</td>
-                                        <td className="p-4 font-medium">Admin logged in & generated JWT claim token</td>
-                                        <td className="p-4 text-purple-400">Low</td>
-                                        <td className="p-4"><span className="px-2 py-1 rounded text-xs bg-blue-950 text-blue-300 border border-blue-800">Logged</span></td>
-                                    </tr>
-                                    <tr className="hover:bg-gray-800/40">
-                                        <td className="p-4 text-gray-400">2026-09-15 04:20 PM</td>
-                                        <td className="p-4 font-medium">Employee record updated via Clean Architecture API</td>
-                                        <td className="p-4 text-purple-400">Medium</td>
-                                        <td className="p-4"><span className="px-2 py-1 rounded text-xs bg-emerald-950 text-emerald-300 border border-emerald-800">Verified</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
-
-                {/* Stripe Billing & Security Panels */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-xl">
-                        <div className="flex items-center space-x-3 mb-4">
-                            <CreditCard className="h-6 w-6 text-indigo-400" />
-                            <h2 className="text-lg font-semibold">Stripe Enterprise Payroll</h2>
-                        </div>
-                        <p className="text-sm text-gray-400 mb-4">
-                            Automate monthly employee salary distribution and secure subscription billing through Stripe.
-                        </p>
-                        <StripeCheckout />
-                    </div>
-
-                    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-xl flex flex-col justify-between">
-                        <div>
-                            <div className="flex items-center space-x-3 mb-4">
-                                <ShieldAlert className="h-6 w-6 text-emerald-400" />
-                                <h2 className="text-lg font-semibold">Security & Compliance</h2>
+                                {msg.sender === 'user' && (
+                                    <div className="w-7 h-7 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-300 shrink-0">
+                                        <User size={14} />
+                                    </div>
+                                )}
                             </div>
-                            <p className="text-sm text-gray-400 mb-4">
-                                Active JWT session tokens are verified via Clean Architecture middleware. All API transactions are encrypted and logged.
-                            </p>
-                        </div>
-                        <div className="text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 p-3 rounded-lg">
-                            System Status: All active directory parameters optimal.
-                        </div>
+                        ))}
                     </div>
+
+                    {/* Chat Input Form */}
+                    <form onSubmit={handleSend} className="p-3 border-t border-gray-800 bg-gray-900 flex items-center space-x-2">
+                        <input
+                            type="text"
+                            placeholder="Ask about staff, salary, counts..."
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            className="flex-1 bg-gray-800 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-purple-600 hover:bg-purple-500 text-white p-2 rounded-xl transition"
+                        >
+                            <Send size={16} />
+                        </button>
+                    </form>
                 </div>
-
-            </main>
-
-            {/* Employee Modal Component */}
-            <EmployeeModal
-                isOpen={isModalOpen}
-                onClose={() => { setIsModalOpen(false); setEditingEmployee(null); }}
-                initialData={editingEmployee}
-                onSave={async (empData) => {
-                    if (editingEmployee && editingEmployee.id) {
-                        await employeeService.update(editingEmployee.id, empData);
-                    } else {
-                        await employeeService.create(empData);
-                    }
-                    loadEmployees();
-                    setEditingEmployee(null);
-                }}
-            />
-
-            {/* Floating Enterprise AI Assistant */}
-            <AIChatbot employees={employees} />
+            )}
         </div>
     );
 };

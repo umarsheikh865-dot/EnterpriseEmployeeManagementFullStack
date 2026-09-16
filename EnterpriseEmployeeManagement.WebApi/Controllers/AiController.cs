@@ -30,18 +30,25 @@ namespace EnterpriseEmployeeManagement.WebApi.Controllers
 
             try
             {
-                // 1. Handle Employee specific queries (counting, listing, searching names)
+                // 1. Handle Employee specific queries (counting, listing, or searching specific names like "Ahmed Khan")
                 if (query.Contains("employee") || query.Contains("staff") || query.Contains("worker") || query.Contains("who") || query.Contains("name"))
                 {
                     int totalEmployees = await _context.Employees.CountAsync();
 
-                    // Check if asking for specific names or list
-                    if (query.Contains("list") || query.Contains("show") || query.Contains("all") || query.Contains("who"))
+                    // Check if asking about a specific person's name
+                    var allEmployees = await _context.Employees.ToListAsync();
+                    var matchedEmployee = allEmployees.FirstOrDefault(e => query.Contains(e.FirstName.ToLower()) || query.Contains(e.LastName.ToLower()));
+
+                    if (matchedEmployee != null)
                     {
-                        var employeeList = await _context.Employees
+                        reply = $"Yes! {matchedEmployee.FirstName} {matchedEmployee.LastName} is an active employee registered in the enterprise directory.";
+                    }
+                    else if (query.Contains("list") || query.Contains("show") || query.Contains("all") || query.Contains("names"))
+                    {
+                        var employeeList = allEmployees
                             .Take(10)
                             .Select(e => $"{e.FirstName} {e.LastName}")
-                            .ToListAsync();
+                            .ToList();
 
                         if (employeeList.Any())
                         {

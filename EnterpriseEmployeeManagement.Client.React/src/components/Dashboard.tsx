@@ -44,6 +44,32 @@ export const Dashboard: React.FC = () => {
         }
     };
 
+    // Bulletproof helper function to map Department IDs or Objects to human-readable names
+    const getDepartmentName = (emp: any) => {
+        // 1. If backend sends a nested department object (e.g. from EF Core .Include())
+        if (emp.department && typeof emp.department === 'object') {
+            return emp.department.name || emp.department.departmentName || `Dept ID: ${emp.department.id}`;
+        }
+
+        // 2. If backend sends a direct department name string
+        if (typeof emp.department === 'string' && isNaN(Number(emp.department))) {
+            return emp.department;
+        }
+
+        if (emp.departmentName) return emp.departmentName;
+
+        // 3. Handle ID mapping (checking both camelCase and PascalCase database properties)
+        const deptId = emp.departmentId || emp.DepartmentId || emp.department;
+        
+        switch (Number(deptId)) {
+            case 1: return 'Management';
+            case 2: return 'Engineering';
+            case 3: return 'Human Resources';
+            case 4: return 'Sales & Marketing';
+            default: return `Dept ID: ${deptId || 'N/A'}`;
+        }
+    };
+
     // CSV Export Handler
     const handleExportCsv = () => {
         if (!employees || employees.length === 0) return;
@@ -55,7 +81,7 @@ export const Dashboard: React.FC = () => {
             `"${emp.firstName ?? ''}"`,
             `"${emp.lastName ?? ''}"`,
             `"${emp.email ?? ''}"`,
-            `"${emp.department ?? ''}"`,
+            `"${getDepartmentName(emp)}"`,
             `"${emp.position || (emp as any).jobTitle || (emp as any).title || 'Software Engineer'}"`, 
             emp.salary ?? 0
         ]);
@@ -81,29 +107,15 @@ export const Dashboard: React.FC = () => {
     const filteredEmployees = employees.filter((emp) => {
         const query = searchTerm.toLowerCase();
         const positionVal = emp.position || (emp as any).jobTitle || (emp as any).title || '';
+        const deptName = getDepartmentName(emp).toLowerCase();
         return (
             emp.firstName.toLowerCase().includes(query) ||
             emp.lastName.toLowerCase().includes(query) ||
             emp.email.toLowerCase().includes(query) ||
-            emp.department.toLowerCase().includes(query) ||
+            deptName.includes(query) ||
             positionVal.toLowerCase().includes(query)
         );
     });
-
-    const getDepartmentBadgeColor = (dept: string) => {
-        switch (dept?.toLowerCase()) {
-            case 'management':
-                return 'bg-amber-950/65 text-amber-300 border-amber-800';
-            case 'engineering':
-                return 'bg-purple-950/65 text-purple-300 border-purple-800';
-            case 'human resources':
-                return 'bg-blue-950/65 text-blue-300 border-blue-800';
-            case 'sales & marketing':
-                return 'bg-emerald-950/65 text-emerald-300 border-emerald-800';
-            default:
-                return 'bg-slate-800 text-slate-300 border-slate-700';
-        }
-    };
 
     return (
         <div className="min-h-screen bg-gray-950 text-gray-100 font-sans">
@@ -194,7 +206,7 @@ export const Dashboard: React.FC = () => {
                                         <td className="p-4 text-gray-400">{emp.email}</td>
                                         <td className="p-4">
                                             <span className="px-2.5 py-1 rounded-full text-xs font-medium border bg-purple-950/65 text-purple-300 border-purple-800">
-                                                {emp.department || 'Engineering'}
+                                                {getDepartmentName(emp)}
                                             </span>
                                         </td>
                                         <td className="p-4 text-gray-300">
@@ -294,8 +306,8 @@ export const Dashboard: React.FC = () => {
                 }}
             />
 
-            {/* Floating Enterprise AI Assistant */}
-            <AIChatbot />
+            {/* Floating Enterprise AI Assistant - Now fully integrated with live employee data */}
+            <AIChatbot employees={employees} />
         </div>
     );
 };
