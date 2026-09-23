@@ -1,4 +1,3 @@
-[![Watch the Demo](https://img.shields.io/badge/🎥_Watch_Demo-60s_Walkthrough-blue?style=for-the-badge&logo=youtube)](https://youtu.be/vxhH-L0DVbM)
 # Enterprise Employee Management Full Stack
 
 Enterprise Employee Management System built with ASP.NET Core Web API,
